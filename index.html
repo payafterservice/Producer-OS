@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producer OS | AI Automation Studio</title>
+    <meta name="description" content="Architecting intelligent infrastructure for next-gen industry leaders.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['"Instrument Serif"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        background: '#000000',
+                        muted: '#94A3B8', // Silver-gray
+                        dim: '#475569',   // Deep slate
+                        brand: '#3B82F6', // Electric Blue
+                        silver: '#E2E8F0', // Platinum Silver
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'scroll': 'scroll 40s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .bg-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 75%);
+        }
+
+        .mask-marquee {
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
+        /* METALLIC BRIGHT BORDER CONFIGURATION */
+        .ante-card {
+            background-color: #080808;
+            box-shadow: 0px .796192px .796192px -1px #0000000a, 
+                        0px 2.41451px 2.41451px -2px #0000000a, 
+                        0px 6.38265px 6.38265px -3px #00000008, 
+                        0px 20px 20px -4px #00000003, 
+                        inset 0px 0px 1px 1px rgba(226, 232, 240, 0.2), /* Silver Inset */
+                        inset 0px 0px 10px 0px rgba(59, 130, 246, 0.05); /* Faint Blue Glow */
+            border-radius: 2.5rem;
+        }
+
+        .ante-border {
+            box-shadow: 0px .796192px .796192px -1px #0000000a, 
+                        0px 2.41451px 2.41451px -2px #0000000a, 
+                        0px 6.38265px 6.38265px -3px #00000008, 
+                        0px 20px 20px -4px #00000003, 
+                        inset 0px 0px 1px 1px rgba(226, 232, 240, 0.3); /* Brighter Silver */
+        }
+
+        .text-silver-gradient {
+            background: linear-gradient(180deg, #FFFFFF 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #333333; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom": "https://esm.sh/react-dom@^19.2.3",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.10.1",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
