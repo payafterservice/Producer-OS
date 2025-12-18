@@ -1,10 +1,11 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   ArrowRight, Database, BarChart3, Sparkles, 
   BrainCircuit, Mail, HardDrive, FileSpreadsheet, MessageCircle, 
   Package, User, ArrowUpRight, ShieldCheck, PieChart, Users,
-  FileText, Settings, BadgeCheck
+  FileText, Settings, BadgeCheck, Send, CheckCircle2
 } from 'lucide-react';
 
 // --- Components ---
@@ -21,7 +22,7 @@ const FadeIn: React.FC<{ children: React.ReactNode; delay?: number; className?: 
   </motion.div>
 );
 
-const Button: React.FC<{ children: React.ReactNode; href?: string; className?: string; variant?: 'primary' | 'outline' }> = ({ children, href, className = "", variant = 'outline' }) => {
+const Button: React.FC<{ children: React.ReactNode; href?: string; onClick?: () => void; className?: string; variant?: 'primary' | 'outline' }> = ({ children, href, onClick, className = "", variant = 'outline' }) => {
   const baseClasses = `group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${className}`;
   const variantClasses = variant === 'primary' 
     ? 'bg-brand text-white shadow-[0_0_20px_rgba(59,130,246,0.2)]' 
@@ -33,19 +34,20 @@ const Button: React.FC<{ children: React.ReactNode; href?: string; className?: s
 
   if (href) {
     if (href.startsWith('#')) {
-      const handleClick = (e: React.MouseEvent) => {
+      const handleScroll = (e: React.MouseEvent) => {
         e.preventDefault();
         const id = href.replace('#', '');
         const el = document.getElementById(id);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
         }
+        if (onClick) onClick();
       };
-      return <a href={href} onClick={handleClick} className={`${baseClasses} ${variantClasses}`}>{content}</a>;
+      return <a href={href} onClick={handleScroll} className={`${baseClasses} ${variantClasses}`}>{content}</a>;
     }
     return <a href={href} className={`${baseClasses} ${variantClasses}`}>{content}</a>;
   }
-  return <button className={`${baseClasses} ${variantClasses}`}>{content}</button>;
+  return <button onClick={onClick} className={`${baseClasses} ${variantClasses}`}>{content}</button>;
 };
 
 // --- Hero ---
@@ -56,7 +58,7 @@ const Hero = () => {
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   return (
-    <section className="relative h-screen min-h-[600px] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black bg-glow">
+    <section className="relative h-screen min-h-[700px] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black bg-glow">
       <motion.div style={{ y, opacity }} className="relative z-10 max-w-6xl mx-auto space-y-8">
         <FadeIn>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 ante-border mb-6">
@@ -92,10 +94,22 @@ const Hero = () => {
               <Button href="#contact" variant="primary">
                 Deploy Your OS <ArrowRight className="w-3 h-3 text-white" />
               </Button>
+              <Button href="#services">Learn More</Button>
             </motion.div>
         </div>
       </motion.div>
       
+      {/* Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.4 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <span className="text-[8px] font-mono uppercase tracking-[0.3em] font-bold">Scroll to Explore</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent"></div>
+      </motion.div>
+
       <div className="absolute bottom-0 w-full border-t border-white/[0.05] bg-black/40 backdrop-blur-sm z-20">
          <div className="w-full mx-auto overflow-hidden py-10 opacity-30 mask-marquee">
             <div className="flex items-center gap-24 md:gap-32 animate-scroll w-max grayscale text-muted">
@@ -127,7 +141,6 @@ const RevenueSection = () => {
           </FadeIn>
         </div>
 
-        {/* Origin Testimonial Card */}
         <FadeIn className="relative ante-card overflow-hidden mb-36 max-w-5xl mx-auto group hover:scale-[1.01] transition-all duration-700">
           <div className="flex flex-col md:flex-row min-h-[520px]">
             <div className="p-12 md:p-16 md:w-[55%] flex flex-col justify-center relative z-10 order-2 md:order-1">
@@ -167,7 +180,6 @@ const RevenueSection = () => {
           </div>
         </FadeIn>
 
-        {/* Diagnostic Grid */}
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-3 gap-16 mb-28 text-left">
             {[
@@ -219,7 +231,6 @@ const Services = () => {
 
       <div className="container mx-auto px-6 md:px-12 max-w-6xl">
         <div className="grid lg:grid-cols-12 gap-6">
-          
           <div className="lg:col-span-5 flex flex-col gap-6">
             <FadeIn className="px-2 mb-6 text-left">
               <h3 className="text-2xl font-serif italic text-white mb-6">Producer OS.Ai Services</h3>
@@ -363,7 +374,6 @@ const Team = () => {
                         alt={member.name} 
                         className="w-full h-full object-cover grayscale transition-all duration-1000 ease-out opacity-40 group-hover:opacity-20 group-hover:scale-[1.05]" 
                     />
-                    {/* Hover Overlay */}
                     <div className="absolute inset-0 flex flex-col justify-end p-8 opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-4 group-hover:translate-y-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent">
                         <h3 className="text-2xl font-serif italic text-white mb-1 tracking-tight">{member.name}</h3>
                         <p className="text-[10px] font-mono text-muted uppercase tracking-[0.3em] mb-4 font-bold">{member.role}</p>
@@ -413,23 +423,108 @@ const FAQ = () => {
 }
 
 const Contact = () => {
+    const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+    
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('sending');
+        setTimeout(() => setStatus('success'), 2000);
+    };
+
     return (
-        <section id="contact" className="py-64 md:py-80 bg-black relative overflow-hidden flex items-center justify-center border-t border-white/[0.05]">
-             <div className="container mx-auto px-6 text-center relative z-10">
-                 <FadeIn>
-                     <p className="text-muted text-[10px] font-mono uppercase tracking-[0.6em] mb-14 font-bold">Scale Your Production</p>
-                     <h2 className="text-7xl md:text-[9rem] lg:text-[11.5rem] font-serif italic text-white mb-20 tracking-tighter leading-[0.78] text-balance text-white/90">Work With Dennis.</h2>
-                     <a 
-                      href="mailto:hello@produceros.com" 
-                      className="text-2xl md:text-4xl font-sans font-bold text-muted hover:text-brand transition-all duration-1000 border-b border-white/10 hover:border-brand/60 pb-5 tracking-tighter"
-                     >
-                         hello@produceros.com
-                     </a>
-                 </FadeIn>
-             </div>
+        <section id="contact" className="py-40 md:py-56 bg-black relative overflow-hidden border-t border-white/[0.05]">
+            <div className="container mx-auto px-6 max-w-6xl relative z-10">
+                <div className="grid lg:grid-cols-2 gap-20 items-center">
+                    <FadeIn>
+                        <p className="text-muted text-[10px] font-mono uppercase tracking-[0.6em] mb-10 font-bold">Scale Your Production</p>
+                        <h2 className="text-5xl md:text-7xl font-serif italic text-white mb-8 tracking-tighter leading-tight">Ready to Deploy Your Agency OS?</h2>
+                        <p className="text-muted text-lg mb-12 font-light leading-relaxed max-w-md">
+                            Join the waitlist for our next cohort of agency partners. Dennis and the team review every application personally.
+                        </p>
+                        
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-full ante-border flex items-center justify-center text-brand">
+                                    <Mail size={20} strokeWidth={1.5} />
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Direct Line</p>
+                                    <p className="text-white font-medium">hello@produceros.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </FadeIn>
+
+                    <FadeIn delay={0.2} className="ante-card p-10 md:p-14 relative group">
+                        {status === 'success' ? (
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.9 }} 
+                                animate={{ opacity: 1, scale: 1 }} 
+                                className="text-center py-20 space-y-6"
+                            >
+                                <div className="w-20 h-20 bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-8">
+                                    <CheckCircle2 className="w-10 h-10 text-brand" />
+                                </div>
+                                <h3 className="text-3xl font-serif italic text-white tracking-tight">Transmission Received</h3>
+                                <p className="text-muted font-light">Our architects will reach out within 24 business hours.</p>
+                                <Button onClick={() => setStatus('idle')} className="mt-8">Send another</Button>
+                            </motion.div>
+                        ) : (
+                            <form onSubmit={handleSubmit} className="space-y-8">
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-mono text-dim uppercase tracking-widest font-bold px-1">Full Name</label>
+                                        <input 
+                                            required 
+                                            type="text" 
+                                            placeholder="Dennis MacDonald"
+                                            className="w-full bg-black/50 ante-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all font-sans"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-mono text-dim uppercase tracking-widest font-bold px-1">Email Address</label>
+                                        <input 
+                                            required 
+                                            type="email" 
+                                            placeholder="dennis@agency.com"
+                                            className="w-full bg-black/50 ante-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all font-sans"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-mono text-dim uppercase tracking-widest font-bold px-1">Agency Name / Production Volume</label>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Elite Life & Annuity - $10M/yr"
+                                        className="w-full bg-black/50 ante-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all font-sans"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-mono text-dim uppercase tracking-widest font-bold px-1">How can we help?</label>
+                                    <textarea 
+                                        rows={4} 
+                                        placeholder="Tell us about your biggest administrative bottleneck..."
+                                        className="w-full bg-black/50 ante-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all font-sans resize-none"
+                                    ></textarea>
+                                </div>
+                                <button 
+                                    disabled={status === 'sending'}
+                                    className="w-full py-5 bg-brand text-white font-mono font-bold uppercase tracking-[0.3em] rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(59,130,246,0.3)] flex items-center justify-center gap-3 disabled:opacity-50"
+                                >
+                                    {status === 'sending' ? (
+                                        <Settings className="w-5 h-5 animate-spin" />
+                                    ) : (
+                                        <>Deploy Application <Send size={14} /></>
+                                    )}
+                                </button>
+                            </form>
+                        )}
+                    </FadeIn>
+                </div>
+            </div>
         </section>
-    )
-}
+    );
+};
 
 const Home = () => {
   return (
