@@ -93,8 +93,8 @@
 
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: translateY(25px);
+            transition: all 0.9s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .fade-in.visible {
@@ -106,6 +106,10 @@
         ::-webkit-scrollbar-track { background: #000000; }
         ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #333333; }
+        
+        #water-canvas {
+            filter: blur(10px);
+        }
     </style>
 </head>
 <body class="selection:bg-brand/20 selection:text-white">
@@ -164,7 +168,7 @@
 
     <!-- Hero -->
     <section id="home" class="relative h-screen min-h-[600px] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
-        <canvas id="water-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-screen blur-[10px]"></canvas>
+        <canvas id="water-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-screen"></canvas>
         <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none z-1"></div>
         
         <div class="relative z-10 max-w-6xl mx-auto space-y-8 flex flex-col items-center">
@@ -193,11 +197,6 @@
             </div>
         </div>
 
-        <div class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 opacity-60">
-            <span class="text-[8px] font-mono uppercase tracking-[0.3em] font-bold text-silver">Explore</span>
-            <div class="w-[1px] h-12 bg-gradient-to-b from-silver to-transparent"></div>
-        </div>
-
         <div class="absolute bottom-0 w-full border-t border-white/[0.05] bg-black/60 backdrop-blur-md z-20">
              <div class="w-full mx-auto overflow-hidden py-4 opacity-50 mask-marquee">
                 <div class="flex items-center gap-24 md:gap-32 animate-scroll w-max grayscale text-silver">
@@ -209,7 +208,6 @@
                     <span class="marquee-text">RECRUITER AI</span>
                     <span class="marquee-text">CLAIM BOT</span>
                     <span class="marquee-text">AGENT DASH</span>
-                    <!-- Duplicate for infinite scroll -->
                     <span class="marquee-text">ANNUITY FLOW</span>
                     <span class="marquee-text">LIFE OS</span>
                     <span class="marquee-text">LEAD GEN</span>
@@ -223,7 +221,7 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- Revenue Section -->
     <section id="about" class="bg-black py-24 border-b border-white/[0.05]">
         <div class="container mx-auto px-6 max-w-6xl">
             <div class="text-center mb-16 max-w-3xl mx-auto">
@@ -251,13 +249,12 @@
                         </div>
                     </div>
                     <div class="md:w-[45%] relative min-h-[350px] bg-black order-1 md:order-2 overflow-hidden border-l border-white/[0.05]">
-                        <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" alt="Dennis M. Postema" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-all duration-1000">
-                        <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent hidden md:block"></div>
+                        <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" alt="Dennis" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-all duration-1000">
                     </div>
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 md:gap-12 text-left mb-12">
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 text-left">
                 <div>
                     <h3 class="fade-in text-xl md:text-2xl font-serif italic text-silver mb-3 tracking-tight">Underwriting Flow</h3>
                     <p class="fade-in text-muted text-[14px] leading-relaxed font-light">Automate the data gathering and initial vetting for policies, saving your agents 15+ hours per week per desk.</p>
@@ -274,7 +271,7 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services -->
     <section id="services" class="py-24 bg-black">
         <div class="container mx-auto px-6 max-w-6xl">
             <h2 class="fade-in text-4xl md:text-6xl font-serif italic text-silver tracking-tighter text-center mb-16 text-silver-gradient">Total Agency Orchestration</h2>
@@ -313,11 +310,108 @@
         </div>
     </section>
 
+    <!-- Team -->
+    <section id="team" class="py-24 bg-black border-t border-white/[0.05]">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="fade-in text-4xl md:text-5xl font-serif italic text-silver text-center mb-16 text-silver-gradient tracking-tighter">The Industry Architects</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="fade-in group text-left">
+                    <div class="aspect-[3/4] bg-[#0a0a0a] overflow-hidden rounded-[2rem] relative mb-5 ante-card border border-white/5">
+                        <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" class="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-30 transition-all duration-1000">
+                        <div class="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 bg-gradient-to-t from-black via-black/40 to-transparent">
+                            <h3 class="text-xl font-serif italic text-silver mb-1">Dennis M. Postema</h3>
+                            <p class="text-[10px] font-mono text-muted uppercase tracking-widest font-bold">Founder / Architect</p>
+                        </div>
+                    </div>
+                    <div class="px-6 group-hover:opacity-0 transition-opacity">
+                        <h3 class="text-lg font-bold text-silver">Dennis M. Postema</h3>
+                        <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Founder / Architect</p>
+                    </div>
+                </div>
+                <div class="fade-in group text-left">
+                    <div class="aspect-[3/4] bg-[#0a0a0a] overflow-hidden rounded-[2rem] relative mb-5 ante-card border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop" class="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-30 transition-all duration-1000">
+                        <div class="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 bg-gradient-to-t from-black via-black/40 to-transparent">
+                            <h3 class="text-xl font-serif italic text-silver mb-1">Christian</h3>
+                            <p class="text-[10px] font-mono text-muted uppercase tracking-widest font-bold">Systems Engineer</p>
+                        </div>
+                    </div>
+                    <div class="px-6 group-hover:opacity-0 transition-opacity">
+                        <h3 class="text-lg font-bold text-silver">Christian</h3>
+                        <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Systems Engineer</p>
+                    </div>
+                </div>
+                <div class="fade-in group text-left">
+                    <div class="aspect-[3/4] bg-[#0a0a0a] overflow-hidden rounded-[2rem] relative mb-5 ante-card border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=800&fit=crop" class="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-30 transition-all duration-1000">
+                        <div class="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 bg-gradient-to-t from-black via-black/40 to-transparent">
+                            <h3 class="text-xl font-serif italic text-silver mb-1">Ahmed</h3>
+                            <p class="text-[10px] font-mono text-muted uppercase tracking-widest font-bold">Product Director</p>
+                        </div>
+                    </div>
+                    <div class="px-6 group-hover:opacity-0 transition-opacity">
+                        <h3 class="text-lg font-bold text-silver">Ahmed</h3>
+                        <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Product Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 bg-black border-t border-white/[0.05]">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="fade-in text-5xl md:text-7xl font-serif italic text-silver mb-8 tracking-tighter text-silver-gradient">Ready to Deploy Your Agency OS?</h2>
+                    <div class="fade-in flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full ante-border flex items-center justify-center text-brand">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Direct Line</p>
+                            <p class="text-silver font-medium">hello@produceros.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in ante-card p-10 md:p-14">
+                    <form id="contact-form" class="space-y-6 text-left">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Full Name</label>
+                                <input required type="text" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Email</label>
+                                <input required type="email" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Message</label>
+                            <textarea rows="4" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-brand text-white font-mono font-black uppercase tracking-[0.3em] rounded-full shadow-[0_0_30px_rgba(46,65,182,0.4)] hover:scale-[1.02] active:scale-95 transition-all">
+                            Deploy Application
+                        </button>
+                    </form>
+                    <div id="form-success" class="hidden text-center py-10 space-y-4">
+                        <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center mx-auto">
+                            <i data-lucide="check-circle-2" class="w-8 h-8 text-brand"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif italic text-silver">Message Received</h3>
+                        <p class="text-muted font-light">Architects will reach out within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="bg-black border-t border-white/[0.05] pt-20 pb-10 px-6">
+    <footer class="bg-black border-t border-white/[0.05] pt-20 pb-10 px-6 text-left">
         <div class="container mx-auto max-w-6xl">
             <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
-                <div class="space-y-6 text-left">
+                <div class="space-y-6">
                     <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-10 w-auto" crossorigin="anonymous">
                     <p class="text-muted text-sm max-w-sm leading-relaxed font-light">
                         Architecting intelligent infrastructure for the next generation of industry leaders. We build the operating systems that scale multi-million dollar agencies.
@@ -388,6 +482,15 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Contact Form Logic
+        const form = document.getElementById('contact-form');
+        const success = document.getElementById('form-success');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.classList.add('hidden');
+            success.classList.remove('hidden');
+        });
 
         // WebGL Water Ripple Background
         const canvas = document.getElementById('water-canvas');
