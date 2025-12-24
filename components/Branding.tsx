@@ -15,8 +15,8 @@ const Branding: React.FC<BrandingProps> = ({ className = "", size = 'md' }) => {
   };
 
   const logoHeight = sizes[size];
-  // Using the Google UserContent CDN format for maximum reliability
-  const logoUrl = "https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC";
+  // Using the most reliable direct link format for Google Drive public assets
+  const logoUrl = "https://drive.google.com/uc?export=view&id=1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC";
 
   return (
     <motion.div 
@@ -30,7 +30,13 @@ const Branding: React.FC<BrandingProps> = ({ className = "", size = 'md' }) => {
         className={`${logoHeight} w-auto object-contain drop-shadow-[0_0_20px_rgba(67,138,254,0.35)]`}
         draggable={false}
         loading="eager"
-        crossOrigin="anonymous"
+        onError={(e) => {
+          // Fallback to secondary CDN if primary fails
+          const target = e.target as HTMLImageElement;
+          if (target.src !== "https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC") {
+            target.src = "https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC";
+          }
+        }}
       />
     </motion.div>
   );
