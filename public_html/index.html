@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producer OS | AI Automation Studio</title>
-    <meta name="description" content="Architecting intelligent infrastructure for next-gen insurance and annuity leaders.">
+    <meta name="description" content="Architecting intelligent infrastructure for next-gen industry leaders.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,12 +36,6 @@
                         'spin-slow': 'spin 12s linear infinite',
                         'scroll': 'scroll 40s linear infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        scroll: {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' },
-                        }
                     }
                 }
             }
@@ -94,6 +88,7 @@
             width: 100%;
             height: 100%;
             z-index: 0;
+            opacity: 0.4;
         }
 
         .mask-marquee {
@@ -101,27 +96,36 @@
             -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
         }
 
-        /* Routing states */
+        /* Routing state */
         .page-content { display: none; }
         .page-content.active { display: block; }
         
         #preloader {
-            transition: opacity 0.8s ease, visibility 0.8s;
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
         }
-        #preloader.hidden {
+        #preloader.loaded {
+            transform: translateY(-100%);
             opacity: 0;
-            visibility: hidden;
+            pointer-events: none;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+            animation: scroll 40s linear infinite;
         }
     </style>
 </head>
 <body class="selection:bg-brand/20 selection:text-white">
 
-    <!-- Preloader (The "Black Screen" fix is here) -->
+    <!-- Preloader (Fail-Safe included) -->
     <div id="preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black">
         <div class="relative overflow-hidden px-10">
-            <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-16 md:h-20 w-auto" id="preloader-logo">
+            <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-16 md:h-20 w-auto" crossorigin="anonymous">
         </div>
-        <div class="h-[1px] bg-brand/40 mt-16 w-32" id="preloader-bar"></div>
+        <div class="h-[1px] bg-brand/40 mt-16 w-0 transition-all duration-1000 ease-out" id="preloader-bar"></div>
         <div class="mt-8 font-mono text-[8px] uppercase tracking-[0.4em] text-dim font-bold">
             Initializing Agency OS
         </div>
@@ -131,7 +135,7 @@
     <nav class="fixed top-6 left-0 right-0 z-50 px-6">
         <div class="container mx-auto flex justify-between items-center max-w-6xl">
             <a href="javascript:void(0)" onclick="navTo('home')" class="flex items-center hover:opacity-80 transition-opacity">
-                <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-8 md:h-10 w-auto">
+                <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-8 md:h-10 w-auto" crossorigin="anonymous">
             </a>
 
             <div class="hidden md:flex bg-black/80 backdrop-blur-xl ante-border rounded-full p-1 items-center gap-0.5">
@@ -141,54 +145,57 @@
                 <a href="javascript:void(0)" onclick="navTo('home', 'contact')" class="text-[9px] font-mono text-muted hover:text-silver uppercase tracking-widest px-4 py-2 rounded-full font-bold transition-all">Contact</a>
             </div>
 
+            <a href="javascript:void(0)" onclick="navTo('home', 'contact')" class="hidden md:flex px-5 py-2.5 bg-brand text-white text-[9px] font-black font-mono uppercase tracking-[0.25em] rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(46,65,182,0.4)]">
+                Start Project
+            </a>
+
             <button class="md:hidden text-silver p-3 bg-black/90 backdrop-blur-xl rounded-full ante-border" id="menu-toggle">
                 <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Main Content Container -->
-    <div id="app-pages">
+    <!-- App Container -->
+    <div id="main-view">
         
-        <!-- HOME PAGE -->
+        <!-- HOME -->
         <div id="page-home" class="page-content active">
             <!-- Hero -->
             <section id="hero" class="relative h-screen min-h-[600px] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
                 <canvas id="water-canvas"></canvas>
-                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-1"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-1 pointer-events-none"></div>
                 
                 <div class="relative z-10 max-w-6xl mx-auto space-y-8 flex flex-col items-center">
                     <div class="fade-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md ante-border mb-2">
                         <span class="w-1.5 h-1.5 bg-brand rounded-full animate-pulse-slow"></span>
-                        <span class="text-[9px] font-mono uppercase tracking-[0.2em] text-silver font-bold">Built for Multi-Million Dollar Producers</span>
+                        <span class="text-[9px] font-mono uppercase tracking-[0.2em] text-silver font-bold">Built by Multi-Million Dollar Producers</span>
                     </div>
                     
-                    <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="fade-in h-20 md:h-32 lg:h-40 w-auto drop-shadow-2xl">
+                    <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="fade-in h-20 md:h-32 lg:h-40 w-auto drop-shadow-2xl" crossorigin="anonymous">
 
                     <div class="space-y-8 max-w-2xl mx-auto flex flex-col items-center">
                         <p class="fade-in text-[15px] md:text-[18px] text-silver/80 leading-relaxed font-light">
                             Engineered by <span class="text-silver font-medium">Dennis M. Postema</span>. We architect the intelligent infrastructure for Insurance & Annuity producers to scale revenue.
                         </p>
                         <div class="fade-in flex justify-center gap-4">
-                            <a href="javascript:void(0)" onclick="navTo('home', 'contact')" class="px-6 py-3 bg-brand text-white font-mono text-[9px] uppercase tracking-widest font-black rounded-full shadow-[0_0_20px_rgba(46,65,182,0.4)] hover:scale-105 transition-transform">Deploy Your OS</a>
-                            <a href="javascript:void(0)" onclick="navTo('home', 'about')" class="px-6 py-3 bg-white/10 ante-border text-silver font-mono text-[9px] uppercase tracking-widest rounded-full hover:bg-white/20 transition-all">Learn More</a>
+                            <a href="javascript:void(0)" onclick="navTo('home', 'contact')" class="px-6 py-3 bg-brand text-white font-mono text-[9px] uppercase tracking-widest font-black rounded-full shadow-[0_0_20px_rgba(46,65,182,0.4)]">Deploy OS</a>
+                            <a href="javascript:void(0)" onclick="navTo('home', 'about')" class="px-6 py-3 bg-white/10 ante-border text-silver font-mono text-[9px] uppercase tracking-widest rounded-full">Learn More</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Marquee -->
                 <div class="absolute bottom-0 w-full border-t border-white/[0.05] bg-black/60 backdrop-blur-md z-20 overflow-hidden py-4 opacity-50 mask-marquee">
                     <div class="flex items-center gap-24 md:gap-32 animate-scroll w-max grayscale text-silver text-[11px] font-mono uppercase tracking-[0.4em] font-bold">
-                        <span>ANNUITY FLOW</span><span>LIFE OS</span><span>LEAD GEN</span><span>D-MAC DIGITAL</span><span>CLAIM BOT</span>
-                        <span>ANNUITY FLOW</span><span>LIFE OS</span><span>LEAD GEN</span><span>D-MAC DIGITAL</span><span>CLAIM BOT</span>
+                        <span>ANNUITY FLOW</span><span>LIFE OS</span><span>LEAD GEN</span><span>D-MAC DIGITAL</span><span>CLAIM BOT</span><span>AGENT DASH</span>
+                        <span>ANNUITY FLOW</span><span>LIFE OS</span><span>LEAD GEN</span><span>D-MAC DIGITAL</span><span>CLAIM BOT</span><span>AGENT DASH</span>
                     </div>
                 </div>
             </section>
 
-            <!-- About -->
+            <!-- About Section -->
             <section id="about" class="bg-black py-24 border-b border-white/[0.05]">
                 <div class="container mx-auto px-6 max-w-6xl text-left">
-                    <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <div class="text-center mb-16">
                         <h2 class="fade-in text-4xl md:text-5xl font-serif italic text-silver-gradient">Engineered for Commission Velocity</h2>
                     </div>
                     <div class="fade-in ante-card overflow-hidden group">
@@ -200,66 +207,71 @@
                                 <h4 class="text-silver font-bold">Dennis M. Postema</h4>
                                 <p class="text-dim text-[9px] font-mono uppercase tracking-widest font-bold">Founder & Producer</p>
                             </div>
-                            <div class="md:w-[45%] relative bg-black">
-                                <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-all duration-1000">
+                            <div class="md:w-[45%] relative bg-black border-l border-white/5">
+                                <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-all duration-1000" crossorigin="anonymous">
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Contact -->
+            <!-- Contact Section -->
             <section id="contact" class="py-24 bg-black border-t border-white/[0.05]">
                 <div class="container mx-auto px-6 max-w-6xl">
                     <div class="grid lg:grid-cols-2 gap-16 items-center">
                         <div class="text-left">
-                            <h2 class="fade-in text-5xl font-serif italic text-silver-gradient mb-8">Ready to Scale?</h2>
-                            <p class="text-muted text-lg mb-8">Direct line: hello@produceros.com</p>
+                            <h2 class="fade-in text-5xl font-serif italic text-silver-gradient mb-8 leading-tight">Ready to Deploy Your Agency OS?</h2>
+                            <p class="text-muted text-lg mb-8 font-light">Join the elite cohort of agencies using our proprietary stacks.</p>
+                            <p class="text-silver font-mono text-xs uppercase tracking-widest">hello@produceros.com</p>
                         </div>
                         <div class="fade-in ante-card p-10">
                             <form id="contact-form" class="space-y-6 text-left">
                                 <input placeholder="Full Name" required class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver outline-none focus:ring-1 focus:ring-brand/50">
-                                <input placeholder="Email" required type="email" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver outline-none focus:ring-1 focus:ring-brand/50">
+                                <input placeholder="Email" type="email" required class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver outline-none focus:ring-1 focus:ring-brand/50">
                                 <textarea placeholder="How can we help?" rows="4" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver outline-none focus:ring-1 focus:ring-brand/50 resize-none"></textarea>
-                                <button type="submit" class="w-full py-4 bg-brand text-white font-mono font-black uppercase tracking-widest rounded-full shadow-lg hover:scale-105 transition-transform">Send Application</button>
+                                <button type="submit" class="w-full py-4 bg-brand text-white font-mono font-black uppercase tracking-widest rounded-full shadow-lg hover:scale-[1.02] transition-transform">Send Application</button>
                             </form>
+                            <div id="success-msg" class="hidden text-center py-12">
+                                <i data-lucide="check-circle" class="w-12 h-12 text-brand mx-auto mb-4"></i>
+                                <h3 class="text-2xl font-serif italic text-silver">Application Sent</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- PRIVACY PAGE -->
+        <!-- PRIVACY -->
         <div id="page-privacy" class="page-content pt-40 pb-20 px-6">
             <div class="container mx-auto max-w-4xl text-left">
                 <h1 class="text-5xl font-serif italic text-silver-gradient mb-12">Privacy Policy</h1>
                 <div class="space-y-6 text-muted font-light leading-relaxed">
-                    <p>Producer OS Digital respects your privacy. We collect data provided via contact forms and anonymous site analytics to improve performance.</p>
-                    <p>We do not sell your personal data to third parties. For data requests, contact hello@produceros.com.</p>
+                    <p>Last updated: September 2025</p>
+                    <p>Producer OS Digital values your privacy. We collect minimal data via contact forms to provide requested services.</p>
+                    <p>We do not share your data with third parties without your explicit consent.</p>
                 </div>
-                <button onclick="navTo('home')" class="mt-12 px-8 py-3 bg-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest hover:bg-white/20 transition-all">Return Home</button>
+                <button onclick="navTo('home')" class="mt-12 px-8 py-3 bg-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest hover:bg-white/20">Back to Home</button>
             </div>
         </div>
 
-        <!-- TERMS PAGE -->
+        <!-- TERMS -->
         <div id="page-terms" class="page-content pt-40 pb-20 px-6">
             <div class="container mx-auto max-w-4xl text-left">
                 <h1 class="text-5xl font-serif italic text-silver-gradient mb-12">Terms & Conditions</h1>
                 <div class="space-y-6 text-muted font-light leading-relaxed">
                     <p>By using this site, you agree to these terms. Content is intellectual property of Producer OS Digital.</p>
-                    <p>Services provided are outlined in separate client service agreements.</p>
+                    <p>Services provided are outlined in separate master service agreements signed by both parties.</p>
                 </div>
-                <button onclick="navTo('home')" class="mt-12 px-8 py-3 bg-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest hover:bg-white/20 transition-all">Return Home</button>
+                <button onclick="navTo('home')" class="mt-12 px-8 py-3 bg-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest hover:bg-white/20">Back to Home</button>
             </div>
         </div>
-
     </div>
 
     <!-- Footer -->
     <footer class="bg-black border-t border-white/[0.05] py-20 px-6">
         <div class="container mx-auto max-w-6xl text-left">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 border-t border-white/[0.05] pt-12">
-                <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">© 2025 PRODUCER OS</p>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-white/[0.05]">
+                <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">© 2025 PRODUCER OS DIGITAL</p>
                 <div class="flex gap-6">
                     <a href="javascript:void(0)" onclick="navTo('privacy')" class="text-[9px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold">Privacy</a>
                     <a href="javascript:void(0)" onclick="navTo('terms')" class="text-[9px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold">Terms</a>
@@ -272,76 +284,75 @@
         // Init Lucide
         lucide.createIcons();
 
-        // FAIL-SAFE: If page hasn't loaded in 2.5 seconds, force hide preloader
-        const hidePreloader = () => {
-            const preloader = document.getElementById('preloader');
-            if(preloader) preloader.classList.add('hidden');
-        };
-        setTimeout(hidePreloader, 2500); 
-        window.onload = hidePreloader;
+        // FAIL-SAFE Preloader
+        window.addEventListener('load', () => {
+            const bar = document.getElementById('preloader-bar');
+            const loader = document.getElementById('preloader');
+            bar.style.width = '160px';
+            setTimeout(() => {
+                loader.classList.add('loaded');
+            }, 1200);
+        });
+        // Strict 3s timeout
+        setTimeout(() => document.getElementById('preloader').classList.add('loaded'), 3000);
 
-        // Routing Logic
-        function navTo(pageId, scrollId) {
+        // Routing
+        function navTo(page, scrollId) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            const targetPage = document.getElementById('page-' + pageId);
-            if(targetPage) targetPage.classList.add('active');
-            
+            const target = document.getElementById('page-' + page);
+            if(target) target.classList.add('active');
             window.scrollTo(0,0);
             if(scrollId) {
                 setTimeout(() => {
                     const el = document.getElementById(scrollId);
                     if(el) el.scrollIntoView({ behavior: 'smooth' });
-                }, 50);
+                }, 100);
             }
         }
 
-        // Reveal animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
+        // Observer
+        const obs = new IntersectionObserver((es) => {
+            es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
-        // WebGL Water Logic
+        // Form
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('contact-form').style.display = 'none';
+            document.getElementById('success-msg').classList.remove('hidden');
+        });
+
+        // WebGL
         const canvas = document.getElementById('water-canvas');
         const gl = canvas.getContext('webgl');
-        if (gl) {
-            const vs = `attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }`;
-            const fs = `
-                precision highp float;
-                uniform float time;
-                uniform vec2 resolution;
-                void main() {
-                    vec2 uv = gl_FragCoord.xy / resolution.xy;
-                    vec2 p = uv - 0.5;
-                    p.x *= resolution.x / resolution.y;
-                    float d = length(p);
-                    float z = sin(d * 22.0 - time * 1.5) * exp(-d * 1.8);
-                    vec3 blue = vec3(0.26, 0.54, 0.99);
-                    vec3 black = vec3(0.01, 0.01, 0.02);
-                    vec3 col = mix(black, blue, z * 0.4 + 0.2);
-                    gl_FragColor = vec4(col, 1.0);
-                }
-            `;
-            const s = (t, c) => { const sh = gl.createShader(t); gl.shaderSource(sh, c); gl.compileShader(sh); return sh; };
+        if(gl) {
+            const vs = `attribute vec2 p; void main(){gl_Position=vec4(p,0.,1.);}`;
+            const fs = `precision highp float; uniform float t; uniform vec2 r; void main(){
+                vec2 uv=gl_FragCoord.xy/r; vec2 p=uv-.5; p.x*=r.x/r.y;
+                float d=length(p);
+                float z=sin(d*18.-t*1.5)*exp(-d*1.5);
+                vec3 col=mix(vec3(0.,0.02,0.05),vec3(0.26,0.54,0.99),z*.5+.5);
+                gl_FragColor=vec4(col,1.);
+            }`;
+            const s = (type, src) => { const sh = gl.createShader(type); gl.shaderSource(sh, src); gl.compileShader(sh); return sh; };
             const prog = gl.createProgram();
             gl.attachShader(prog, s(gl.VERTEX_SHADER, vs));
             gl.attachShader(prog, s(gl.FRAGMENT_SHADER, fs));
             gl.linkProgram(prog); gl.useProgram(prog);
             gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-            const pos = gl.getAttribLocation(prog, 'position');
-            gl.enableVertexAttribArray(pos); gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
-            const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; gl.viewport(0,0,canvas.width,canvas.height); };
-            window.onresize = resize; resize();
-            const draw = (t) => { 
-                gl.uniform1f(gl.getUniformLocation(prog, 'time'), t*0.001); 
-                gl.uniform2f(gl.getUniformLocation(prog, 'resolution'), canvas.width, canvas.height); 
-                gl.drawArrays(gl.TRIANGLE_STRIP,0,4); 
-                requestAnimationFrame(draw); 
+            const p = gl.getAttribLocation(prog, 'p');
+            gl.enableVertexAttribArray(p); gl.vertexAttribPointer(p, 2, gl.FLOAT, false, 0, 0);
+            const resize = () => { canvas.width=window.innerWidth; canvas.height=window.innerHeight; gl.viewport(0,0,canvas.width,canvas.height); };
+            window.onresize=resize; resize();
+            const render = (time) => {
+                gl.uniform1f(gl.getUniformLocation(prog, 't'), time*0.001);
+                gl.uniform2f(gl.getUniformLocation(prog, 'r'), canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+                requestAnimationFrame(render);
             };
-            requestAnimationFrame(draw);
+            requestAnimationFrame(render);
         }
     </script>
 </body>
