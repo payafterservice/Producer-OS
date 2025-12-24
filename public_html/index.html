@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producer OS | AI Automation Studio</title>
-    <meta name="description" content="Architecting intelligent infrastructure for next-gen industry leaders.">
+    <meta name="description" content="Architecting intelligent infrastructure for next-gen insurance and annuity leaders.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,6 +110,40 @@
         #water-canvas {
             filter: blur(10px);
         }
+
+        .nav-link {
+            font-size: 9px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            padding: 0.5rem 0.875rem;
+            border-radius: 9999px;
+            transition: all 0.3s;
+            font-weight: 700;
+        }
+        .nav-link:hover {
+            color: #BCC6CC;
+            background-color: rgba(255,255,255,0.05);
+        }
+        .nav-link-mobile {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            font-weight: 700;
+        }
+        .marquee-text {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.4em;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            cursor: default;
+        }
+        .marquee-text:hover { color: #438AFE; }
     </style>
 </head>
 <body class="selection:bg-brand/20 selection:text-white">
@@ -181,7 +215,7 @@
                  <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-20 md:h-32 lg:h-40 w-auto drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]" crossorigin="anonymous">
             </div>
 
-            <div class="space-y-8 max-w-2xl mx-auto flex flex-col items-center">
+            <div class="space-y-8 max-w-2xl mx-auto flex flex-col items-center text-center">
                 <p class="fade-in text-[15px] md:text-[18px] text-silver/80 leading-relaxed tracking-tight font-light drop-shadow-sm">
                     Engineered by <span class="text-silver font-medium">Dennis M. Postema</span>. We architect the intelligent infrastructure for Insurance & Annuity producers to scale revenue without increasing overhead.
                 </p>
@@ -233,7 +267,7 @@
 
             <div class="fade-in relative ante-card overflow-hidden mb-12 max-w-5xl mx-auto group">
                 <div class="flex flex-col md:flex-row min-h-[440px]">
-                    <div class="p-8 md:p-12 md:w-[55%] flex flex-col justify-center relative z-10 order-2 md:order-1">
+                    <div class="p-8 md:p-12 md:w-[55%] flex flex-col justify-center relative z-10 order-2 md:order-1 text-left">
                         <div class="flex gap-1.5 mb-5 text-silver">
                             <i data-lucide="badge-check" class="w-5 h-5 text-brand"></i>
                             <span class="text-[10px] font-mono uppercase tracking-widest text-brand font-bold">Verified Origin Story</span>
@@ -271,7 +305,7 @@
         </div>
     </section>
 
-    <!-- Services -->
+    <!-- Services Section -->
     <section id="services" class="py-24 bg-black">
         <div class="container mx-auto px-6 max-w-6xl">
             <h2 class="fade-in text-4xl md:text-6xl font-serif italic text-silver tracking-tighter text-center mb-16 text-silver-gradient">Total Agency Orchestration</h2>
@@ -310,7 +344,7 @@
         </div>
     </section>
 
-    <!-- Team -->
+    <!-- Team Section -->
     <section id="team" class="py-24 bg-black border-t border-white/[0.05]">
         <div class="container mx-auto px-6 max-w-6xl">
             <h2 class="fade-in text-4xl md:text-5xl font-serif italic text-silver text-center mb-16 text-silver-gradient tracking-tighter">The Industry Architects</h2>
@@ -358,11 +392,32 @@
         </div>
     </section>
 
-    <!-- Contact -->
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-black border-t border-white/[0.05]">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="fade-in text-4xl font-serif italic text-silver text-center mb-16 text-silver-gradient tracking-tighter">Industry Specifics</h2>
+            <div class="space-y-6">
+                <div class="fade-in group p-10 ante-card text-left">
+                    <h3 class="text-xl font-serif italic text-silver mb-3">Is this compliant with carrier guidelines?</h3>
+                    <p class="text-muted font-light leading-relaxed">Yes. Our systems are built with compliance first, ensuring all communications follow industry and carrier-specific regulations.</p>
+                </div>
+                <div class="fade-in group p-10 ante-card text-left">
+                    <h3 class="text-xl font-serif italic text-silver mb-3">Does this replace my CRM?</h3>
+                    <p class="text-muted font-light leading-relaxed">No. Producer OS acts as the 'brain' on top of your CRM, making it work 10x harder for you by automating the workflow between platforms.</p>
+                </div>
+                <div class="fade-in group p-10 ante-card text-left">
+                    <h3 class="text-xl font-serif italic text-silver mb-3">How fast will I see results?</h3>
+                    <p class="text-muted font-light leading-relaxed">Most agencies see a measurable decrease in administrative time within 14 days and an increase in touch-points within 30 days.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
     <section id="contact" class="py-24 bg-black border-t border-white/[0.05]">
         <div class="container mx-auto px-6 max-w-6xl">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div>
+                <div class="text-left">
                     <h2 class="fade-in text-5xl md:text-7xl font-serif italic text-silver mb-8 tracking-tighter text-silver-gradient">Ready to Deploy Your Agency OS?</h2>
                     <div class="fade-in flex items-center gap-4">
                         <div class="w-12 h-12 rounded-full ante-border flex items-center justify-center text-brand">
@@ -561,40 +616,5 @@
             requestAnimationFrame(render);
         }
     </script>
-    <style>
-        .nav-link {
-            font-size: 9px;
-            font-family: 'JetBrains Mono', monospace;
-            color: #94A3B8;
-            text-transform: uppercase;
-            letter-spacing: 0.35em;
-            padding: 0.5rem 0.875rem;
-            border-radius: 9999px;
-            transition: all 0.3s;
-            font-weight: 700;
-        }
-        .nav-link:hover {
-            color: #BCC6CC;
-            background-color: rgba(255,255,255,0.05);
-        }
-        .nav-link-mobile {
-            font-size: 10px;
-            font-family: 'JetBrains Mono', monospace;
-            color: #94A3B8;
-            text-transform: uppercase;
-            letter-spacing: 0.35em;
-            font-weight: 700;
-        }
-        .marquee-text {
-            font-size: 11px;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.4em;
-            font-weight: 700;
-            text-transform: uppercase;
-            transition: color 0.3s;
-            cursor: default;
-        }
-        .marquee-text:hover { color: #438AFE; }
-    </style>
 </body>
 </html>
