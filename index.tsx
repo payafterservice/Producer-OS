@@ -1,11 +1,1 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
-
-const container = document.getElementById('root');
-if (container) {
-  // Ensure the container is visible
-  container.style.display = 'block';
-  const root = createRoot(container);
-  root.render(<App />);
-}
+// This file is deprecated. The application is now standalone in index.html.

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producer OS | AI Automation Studio</title>
-    <meta name="description" content="Architecting intelligent infrastructure for next-gen industry leaders.">
+    <meta name="description" content="Architecting intelligent infrastructure for next-gen insurance and annuity leaders.">
     
     <!-- External Dependencies -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,26 +100,29 @@
         }
 
         .page-view { display: none; }
-        .page-view.active { display: block; }
+        .page-view.active { display: block; animation: fadeIn 0.5s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
     "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
     "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
-    "vite": "https://esm.sh/vite@^7.3.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }
 </script>
 </head>
 <body class="selection:bg-brand/20 selection:text-white">
 
-    <!-- Sticky Navigation -->
+    <!-- Standalone Navigation -->
     <nav class="fixed top-6 left-0 right-0 z-50 px-6 pointer-events-none">
         <div class="container mx-auto flex justify-between items-center max-w-6xl">
             <a href="javascript:void(0)" onclick="switchPage('home')" class="pointer-events-auto hover:opacity-80 transition-opacity">
@@ -134,16 +137,16 @@
             </div>
 
             <button onclick="switchPage('home', 'contact')" class="hidden md:flex pointer-events-auto px-6 py-2.5 bg-brand text-white text-[9px] font-black font-mono uppercase tracking-[0.3em] rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(46,65,182,0.4)]">
-                Deploy Project
+                Deploy OS
             </button>
 
-            <button class="md:hidden pointer-events-auto text-silver p-3 bg-black/90 backdrop-blur-xl rounded-full ante-border" id="menu-btn" onclick="toggleMobileMenu()">
+            <button class="md:hidden pointer-events-auto text-silver p-3 bg-black/90 backdrop-blur-xl rounded-full ante-border" onclick="toggleMobileMenu()">
                 <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu Overlay -->
     <div id="mobile-menu" class="fixed inset-0 bg-black z-[60] flex flex-col items-center justify-center space-y-8 md:hidden transition-all duration-700 opacity-0 pointer-events-none">
         <button class="absolute top-8 right-8 text-silver" onclick="toggleMobileMenu()">
             <i data-lucide="x" class="w-8 h-8"></i>
@@ -154,12 +157,12 @@
         <a href="javascript:void(0)" onclick="switchPage('home', 'contact'); toggleMobileMenu();" class="text-xl font-mono text-muted uppercase tracking-[0.3em] font-bold">Contact</a>
     </div>
 
-    <!-- Content Sections -->
-    <main id="app-container">
+    <!-- Main View Container -->
+    <main id="app-content">
         
-        <!-- HOME PAGE -->
+        <!-- HOME PAGE VIEW -->
         <div id="view-home" class="page-view active">
-            <!-- Hero -->
+            <!-- Hero Section -->
             <section id="home" class="relative h-screen min-h-[600px] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
                 <canvas id="water-canvas"></canvas>
                 <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-1 pointer-events-none"></div>
@@ -183,7 +186,7 @@
                     </div>
                 </div>
 
-                <!-- Marquee -->
+                <!-- Scrolling Marquee -->
                 <div class="absolute bottom-0 w-full border-t border-white/[0.05] bg-black/60 backdrop-blur-md z-20 overflow-hidden py-4 opacity-50 mask-marquee">
                     <div class="flex items-center gap-24 md:gap-32 animate-scroll w-max grayscale text-silver text-[11px] font-mono uppercase tracking-[0.4em] font-bold">
                         <span>ANNUITY FLOW</span><span>LIFE OS</span><span>LEAD GEN</span><span>D-MAC DIGITAL</span><span>CLAIM BOT</span>
@@ -220,7 +223,7 @@
                 </div>
             </section>
 
-            <!-- Services Placeholder -->
+            <!-- Services Section -->
             <section id="services" class="bg-black py-32 border-b border-white/[0.05]">
                 <div class="container mx-auto px-6 max-w-6xl text-center">
                     <h2 class="fade-in text-4xl md:text-5xl font-serif italic text-silver-gradient mb-16">Intelligence Core</h2>
@@ -284,7 +287,6 @@
                 <div class="space-y-8 text-muted font-light leading-relaxed text-lg">
                     <p>At Producer OS Digital, we prioritize your data security. We collect minimal information provided via contact forms to facilitate business discussions.</p>
                     <p>We do not sell, rent, or trade your personal data. Analytics gathered on this site are anonymous and used only for performance optimization.</p>
-                    <p>For data removal requests, please email <strong>hello@produceros.com</strong>.</p>
                 </div>
                 <button onclick="switchPage('home')" class="mt-16 px-10 py-3.5 bg-white/10 rounded-full text-[11px] font-mono uppercase tracking-widest hover:bg-white/20 transition-all border border-white/5">Back to Home</button>
             </div>
@@ -318,10 +320,10 @@
     </footer>
 
     <script>
-        // Initialize Lucide Icons
+        // Init Lucide Icons
         lucide.createIcons();
 
-        // Mobile Menu Toggle
+        // Mobile Menu Functionality
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             if(menu.classList.contains('opacity-0')) {
@@ -333,16 +335,16 @@
             }
         }
 
-        // Routing System
+        // SPA Page Switcher Logic
         function switchPage(viewId, scrollTargetId) {
-            // Reset all views
+            // Hide all views
             document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
             
-            // Activate requested view
-            const target = document.getElementById('view-' + viewId);
-            if(target) target.classList.add('active');
+            // Show target view
+            const targetView = document.getElementById('view-' + viewId);
+            if(targetView) targetView.classList.add('active');
             
-            // Scroll handling
+            // Optional smooth scroll to section
             if(scrollTargetId) {
                 setTimeout(() => {
                     const el = document.getElementById(scrollTargetId);
@@ -353,7 +355,7 @@
             }
         }
 
-        // Intersection Observer for Reveal Animations
+        // Scroll Observer for Fade-In Effects
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -380,20 +382,30 @@
                 vec3 col=mix(vec3(0.01,0.02,0.05),vec3(0.26,0.54,0.99),z*0.5+0.5);
                 gl_FragColor=vec4(col,1.);
             }`;
-            const s = (type, src) => { const sh = gl.createShader(type); gl.shaderSource(sh, src); gl.compileShader(sh); return sh; };
+            const shader = (type, src) => { 
+                const s = gl.createShader(type); 
+                gl.shaderSource(s, src); 
+                gl.compileShader(s); 
+                return s; 
+            };
             const prog = gl.createProgram();
-            const vsh = s(gl.VERTEX_SHADER, vs);
-            const fsh = s(gl.FRAGMENT_SHADER, fs);
-            gl.compileShader(vsh); gl.compileShader(fsh);
-            gl.attachShader(prog, vsh); gl.attachShader(prog, fsh);
+            gl.attachShader(prog, shader(gl.VERTEX_SHADER, vs));
+            gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, fs));
             gl.linkProgram(prog); gl.useProgram(prog);
-            const buf = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+            gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
             const pLoc = gl.getAttribLocation(prog, 'p');
-            gl.enableVertexAttribArray(pLoc); gl.vertexAttribPointer(pLoc, 2, gl.FLOAT, false, 0, 0);
-            const res = () => { canvas.width=window.innerWidth; canvas.height=window.innerHeight; gl.viewport(0,0,canvas.width,canvas.height); };
-            window.addEventListener('resize', res); res();
+            gl.enableVertexAttribArray(pLoc); 
+            gl.vertexAttribPointer(pLoc, 2, gl.FLOAT, false, 0, 0);
+            
+            const resize = () => { 
+                canvas.width=window.innerWidth; 
+                canvas.height=window.innerHeight; 
+                gl.viewport(0,0,canvas.width,canvas.height); 
+            };
+            window.addEventListener('resize', resize); 
+            resize();
+            
             const render = (time) => {
                 gl.uniform1f(gl.getUniformLocation(prog, 't'), time*0.001);
                 gl.uniform2f(gl.getUniformLocation(prog, 'r'), canvas.width, canvas.height);
