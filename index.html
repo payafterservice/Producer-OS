@@ -6,13 +6,13 @@
     <title>Producer OS | AI Automation Studio</title>
     <meta name="description" content="Architecting intelligent infrastructure for next-gen industry leaders.">
     
-    <!-- Fonts -->
+    <!-- External Dependencies -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -26,16 +26,15 @@
                         background: '#000000',
                         muted: '#94A3B8',
                         dim: '#64748B',
-                        brand: '#438AFE', // Azure Blue
-                        silver: '#BCC6CC', // Metallic Silver
+                        brand: '#438AFE',
+                        silver: '#BCC6CC',
                     },
                     animation: {
-                        'spin-slow': 'spin 12s linear infinite',
-                        'scroll': 'scroll 40s linear infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scroll': 'marquee 40s linear infinite',
                     },
                     keyframes: {
-                        scroll: {
+                        marquee: {
                             '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(-50%)' },
                         }
@@ -52,34 +51,18 @@
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-        }
-
-        .bg-glow {
-            background: radial-gradient(circle at 50% 0%, rgba(67, 138, 254, 0.15) 0%, transparent 75%);
-        }
-
-        .mask-marquee {
-            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            margin: 0;
         }
 
         .ante-card {
             background-color: #080808;
-            box-shadow: 0px .796192px .796192px -1px #0000000a, 
-                        0px 2.41451px 2.41451px -2px #0000000a, 
-                        0px 6.38265px 6.38265px -3px #00000008, 
-                        0px 20px 20px -4px #00000003, 
-                        inset 0px 0px 1px 1px rgba(188, 198, 204, 0.1),
+            box-shadow: inset 0px 0px 1px 1px rgba(188, 198, 204, 0.1),
                         inset 0px 0px 15px 0px rgba(67, 138, 254, 0.1);
             border-radius: 2.5rem;
         }
 
         .ante-border {
-            box-shadow: 0px .796192px .796192px -1px #0000000a, 
-                        0px 2.41451px 2.41451px -2px #0000000a, 
-                        0px 6.38265px 6.38265px -3px #00000008, 
-                        0px 20px 20px -4px #00000003, 
-                        inset 0px 0px 1px 1px rgba(188, 198, 204, 0.2);
+            box-shadow: inset 0px 0px 1px 1px rgba(188, 198, 204, 0.2);
         }
 
         .text-silver-gradient {
@@ -88,28 +71,325 @@
             -webkit-text-fill-color: transparent;
         }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000000; }
-        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #333333; }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #water-canvas {
+            filter: blur(10px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.45;
+            pointer-events: none;
+        }
+
+        .mask-marquee {
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
+        #preloader {
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+        #preloader.loaded {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .page-view { display: none; }
+        .page-view.active { display: block; }
     </style>
 <script type="importmap">
 {
   "imports": {
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
     "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
-    "vite": "https://esm.sh/vite@^7.3.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "vite": "https://esm.sh/vite@^7.3.0"
   }
 }
 </script>
 </head>
-<body>
-    <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
+<body class="selection:bg-brand/20 selection:text-white">
+
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black">
+        <div class="relative overflow-hidden px-10">
+            <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-16 md:h-24 w-auto drop-shadow-[0_0_30px_rgba(67,138,254,0.3)]">
+        </div>
+        <div id="loader-bar" class="h-[1px] bg-brand/60 mt-16 w-0 transition-all duration-1000 ease-out"></div>
+        <div class="mt-8 font-mono text-[9px] uppercase tracking-[0.5em] text-dim font-bold animate-pulse">
+            Initializing Agency OS
+        </div>
+    </div>
+
+    <!-- Sticky Navigation -->
+    <nav class="fixed top-6 left-0 right-0 z-50 px-6 pointer-events-none">
+        <div class="container mx-auto flex justify-between items-center max-w-6xl">
+            <a href="javascript:void(0)" onclick="switchPage('home')" class="pointer-events-auto hover:opacity-80 transition-opacity">
+                <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-8 md:h-10 w-auto">
+            </a>
+
+            <div class="hidden md:flex pointer-events-auto bg-black/80 backdrop-blur-xl ante-border rounded-full p-1 items-center gap-0.5">
+                <a href="javascript:void(0)" onclick="switchPage('home', 'home')" class="text-[9px] font-mono text-muted hover:text-silver uppercase tracking-[0.3em] px-4 py-2 rounded-full font-bold transition-all">Home</a>
+                <a href="javascript:void(0)" onclick="switchPage('home', 'about')" class="text-[9px] font-mono text-muted hover:text-silver uppercase tracking-[0.3em] px-4 py-2 rounded-full font-bold transition-all">About</a>
+                <a href="javascript:void(0)" onclick="switchPage('home', 'services')" class="text-[9px] font-mono text-muted hover:text-silver uppercase tracking-[0.3em] px-4 py-2 rounded-full font-bold transition-all">Services</a>
+                <a href="javascript:void(0)" onclick="switchPage('home', 'contact')" class="text-[9px] font-mono text-muted hover:text-silver uppercase tracking-[0.3em] px-4 py-2 rounded-full font-bold transition-all">Contact</a>
+            </div>
+
+            <button onclick="switchPage('home', 'contact')" class="hidden md:flex pointer-events-auto px-6 py-2.5 bg-brand text-white text-[9px] font-black font-mono uppercase tracking-[0.3em] rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(46,65,182,0.4)]">
+                Deploy Project
+            </button>
+
+            <button class="md:hidden pointer-events-auto text-silver p-3 bg-black/90 backdrop-blur-xl rounded-full ante-border" id="menu-btn">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Content Sections -->
+    <main id="app-container">
+        
+        <!-- HOME PAGE -->
+        <div id="view-home" class="page-view active">
+            <!-- Hero -->
+            <section id="home" class="relative h-screen min-h-[600px] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
+                <canvas id="water-canvas"></canvas>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-1 pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-6xl mx-auto space-y-10 flex flex-col items-center">
+                    <div class="fade-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md ante-border">
+                        <span class="w-1.5 h-1.5 bg-brand rounded-full animate-pulse-slow"></span>
+                        <span class="text-[9px] font-mono uppercase tracking-[0.2em] text-silver font-bold">Built by Multi-Million Dollar Producers</span>
+                    </div>
+                    
+                    <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="fade-in h-20 md:h-32 lg:h-44 w-auto drop-shadow-2xl">
+
+                    <div class="space-y-8 max-w-2xl mx-auto flex flex-col items-center">
+                        <p class="fade-in text-[16px] md:text-[19px] text-silver/80 leading-relaxed font-light">
+                            Engineered by <span class="text-silver font-medium">Dennis M. Postema</span>. We architect the intelligent infrastructure for Insurance & Annuity leaders to scale revenue.
+                        </p>
+                        <div class="fade-in flex justify-center gap-4">
+                            <button onclick="switchPage('home', 'contact')" class="px-7 py-3.5 bg-brand text-white font-mono text-[10px] uppercase tracking-widest font-black rounded-full shadow-xl hover:scale-105 transition-transform">Get Started</button>
+                            <button onclick="switchPage('home', 'about')" class="px-7 py-3.5 bg-white/10 ante-border text-silver font-mono text-[10px] uppercase tracking-widest rounded-full hover:bg-white/20 transition-all">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marquee -->
+                <div class="absolute bottom-0 w-full border-t border-white/[0.05] bg-black/60 backdrop-blur-md z-20 overflow-hidden py-4 opacity-50 mask-marquee">
+                    <div class="flex items-center gap-24 md:gap-32 animate-scroll w-max grayscale text-silver text-[11px] font-mono uppercase tracking-[0.4em] font-bold">
+                        <span>ANNUITY FLOW</span><span>LIFE OS</span><span>LEAD GEN</span><span>D-MAC DIGITAL</span><span>CLAIM BOT</span>
+                        <span>ANNUITY FLOW</span><span>LIFE OS</span><span>LEAD GEN</span><span>D-MAC DIGITAL</span><span>CLAIM BOT</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="bg-black py-32 border-b border-white/[0.05]">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="text-center mb-20">
+                        <h2 class="fade-in text-4xl md:text-5xl font-serif italic text-silver-gradient">Engineered for Commission Velocity</h2>
+                    </div>
+                    <div class="fade-in ante-card overflow-hidden group">
+                        <div class="flex flex-col md:flex-row min-h-[460px]">
+                            <div class="p-10 md:p-16 md:w-[60%] flex flex-col justify-center text-left">
+                                <blockquote class="text-2xl md:text-3xl text-silver font-serif italic mb-10 leading-relaxed">
+                                    "The biggest bottleneck for producers is manual follow-up. I built Producer OS to solve my own problems."
+                                </blockquote>
+                                <div class="flex items-center gap-4">
+                                    <div class="h-[1px] w-12 bg-brand"></div>
+                                    <div>
+                                        <h4 class="text-silver font-bold text-lg">Dennis M. Postema</h4>
+                                        <p class="text-dim text-[10px] font-mono uppercase tracking-widest font-bold">Founder & Producer</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md:w-[40%] relative bg-black border-l border-white/5">
+                                <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-all duration-1000">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-32 bg-black">
+                <div class="container mx-auto px-6 max-w-6xl">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="text-left">
+                            <h2 class="fade-in text-5xl md:text-6xl font-serif italic text-silver-gradient mb-10 leading-tight">Ready to Deploy Your OS?</h2>
+                            <p class="text-muted text-lg mb-12 font-light max-w-md">Join the elite agencies using our proprietary automation stacks to remove administrative friction.</p>
+                            <div class="space-y-4">
+                                <p class="text-brand font-mono text-xs uppercase tracking-[0.3em] font-black">Direct Access:</p>
+                                <p class="text-silver text-2xl font-serif">hello@produceros.com</p>
+                            </div>
+                        </div>
+                        <div class="fade-in ante-card p-10 md:p-12">
+                            <form id="lead-form" class="space-y-6 text-left">
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <input placeholder="Name" required class="w-full bg-black/50 ante-border rounded-2xl px-6 py-4 text-silver outline-none focus:ring-1 focus:ring-brand/50 transition-all">
+                                    <input placeholder="Email" type="email" required class="w-full bg-black/50 ante-border rounded-2xl px-6 py-4 text-silver outline-none focus:ring-1 focus:ring-brand/50 transition-all">
+                                </div>
+                                <input placeholder="Agency Name / Annual Volume" class="w-full bg-black/50 ante-border rounded-2xl px-6 py-4 text-silver outline-none focus:ring-1 focus:ring-brand/50 transition-all">
+                                <textarea placeholder="How can we help?" rows="4" class="w-full bg-black/50 ante-border rounded-2xl px-6 py-4 text-silver outline-none focus:ring-1 focus:ring-brand/50 resize-none transition-all"></textarea>
+                                <button type="submit" class="w-full py-5 bg-brand text-white font-mono font-black uppercase tracking-widest rounded-full shadow-lg hover:scale-[1.02] transition-transform">Send Application</button>
+                            </form>
+                            <div id="success-state" class="hidden text-center py-20">
+                                <i data-lucide="check-circle" class="w-16 h-16 text-brand mx-auto mb-6"></i>
+                                <h3 class="text-3xl font-serif italic text-silver">Application Received</h3>
+                                <p class="text-muted mt-4">We will be in touch within 24 hours.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PRIVACY POLICY VIEW -->
+        <div id="view-privacy" class="page-view pt-40 pb-20 px-6">
+            <div class="container mx-auto max-w-4xl text-left">
+                <h1 class="text-5xl md:text-6xl font-serif italic text-silver-gradient mb-12">Privacy Policy</h1>
+                <div class="space-y-8 text-muted font-light leading-relaxed text-lg">
+                    <p>At Producer OS Digital, we prioritize your data security. We collect minimal information provided via contact forms to facilitate business discussions.</p>
+                    <p>We do not sell, rent, or trade your personal data. Analytics gathered on this site are anonymous and used only for performance optimization.</p>
+                    <p>For data removal requests, please email <strong>hello@produceros.com</strong>.</p>
+                </div>
+                <button onclick="switchPage('home')" class="mt-16 px-10 py-3.5 bg-white/10 rounded-full text-[11px] font-mono uppercase tracking-widest hover:bg-white/20 transition-all border border-white/5">Back to Home</button>
+            </div>
+        </div>
+
+        <!-- TERMS VIEW -->
+        <div id="view-terms" class="page-view pt-40 pb-20 px-6">
+            <div class="container mx-auto max-w-4xl text-left">
+                <h1 class="text-5xl md:text-6xl font-serif italic text-silver-gradient mb-12">Terms of Service</h1>
+                <div class="space-y-8 text-muted font-light leading-relaxed text-lg">
+                    <p>By accessing this website, you agree to our terms. All content, logos, and proprietary concepts are the intellectual property of Producer OS Digital.</p>
+                    <p>Services offered are subject to individual Master Service Agreements (MSA) signed between Producer OS and the Client.</p>
+                </div>
+                <button onclick="switchPage('home')" class="mt-16 px-10 py-3.5 bg-white/10 rounded-full text-[11px] font-mono uppercase tracking-widest hover:bg-white/20 transition-all border border-white/5">Back to Home</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/[0.05] py-24 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 pt-16 border-t border-white/[0.05]">
+                <p class="text-[10px] font-mono text-dim uppercase tracking-[0.4em] font-bold">© 2025 PRODUCER OS DIGITAL</p>
+                <div class="flex gap-10">
+                    <a href="javascript:void(0)" onclick="switchPage('privacy')" class="text-[10px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold transition-colors">Privacy</a>
+                    <a href="javascript:void(0)" onclick="switchPage('terms')" class="text-[10px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold transition-colors">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // FAIL-SAFE Preloader Logic
+        window.addEventListener('load', () => {
+            const bar = document.getElementById('loader-bar');
+            bar.style.width = '160px';
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('loaded');
+            }, 1200);
+        });
+        
+        // Final fail-safe: Force hide preloader after 3 seconds if anything gets stuck
+        setTimeout(() => {
+            const pre = document.getElementById('preloader');
+            if(!pre.classList.contains('loaded')) pre.classList.add('loaded');
+        }, 3000);
+
+        // Routing System
+        function switchPage(viewId, scrollTargetId) {
+            // Reset all views
+            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+            
+            // Activate requested view
+            const target = document.getElementById('view-' + viewId);
+            if(target) target.classList.add('active');
+            
+            // Scroll handling
+            if(scrollTargetId) {
+                setTimeout(() => {
+                    const el = document.getElementById(scrollTargetId);
+                    if(el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            } else {
+                window.scrollTo(0,0);
+            }
+        }
+
+        // Intersection Observer for Reveal Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Form Submission visual logic
+        document.getElementById('lead-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('lead-form').style.display = 'none';
+            document.getElementById('success-state').classList.remove('hidden');
+        });
+
+        // WebGL Water Animation
+        const canvas = document.getElementById('water-canvas');
+        const gl = canvas.getContext('webgl');
+        if(gl) {
+            const vs = `attribute vec2 p; void main(){gl_Position=vec4(p,0.,1.);}`;
+            const fs = `precision highp float; uniform float t; uniform vec2 r; void main(){
+                vec2 uv=gl_FragCoord.xy/r; vec2 p=uv-.5; p.x*=r.x/r.y;
+                float d=length(p);
+                float z=sin(d*16.-t*1.4)*exp(-d*1.6);
+                vec3 col=mix(vec3(0.01,0.02,0.05),vec3(0.26,0.54,0.99),z*0.5+0.5);
+                gl_FragColor=vec4(col,1.);
+            }`;
+            const s = (type, src) => { const sh = gl.createShader(type); gl.shaderSource(sh, src); gl.compileShader(sh); return sh; };
+            const prog = gl.createProgram();
+            const vsh = s(gl.VERTEX_SHADER, vs);
+            const fsh = s(gl.FRAGMENT_SHADER, fs);
+            gl.compileShader(vsh); gl.compileShader(fsh);
+            gl.attachShader(prog, vsh); gl.attachShader(prog, fsh);
+            gl.linkProgram(prog); gl.useProgram(prog);
+            const buf = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+            const pLoc = gl.getAttribLocation(prog, 'p');
+            gl.enableVertexAttribArray(pLoc); gl.vertexAttribPointer(pLoc, 2, gl.FLOAT, false, 0, 0);
+            const res = () => { canvas.width=window.innerWidth; canvas.height=window.innerHeight; gl.viewport(0,0,canvas.width,canvas.height); };
+            window.addEventListener('resize', res); res();
+            const render = (time) => {
+                gl.uniform1f(gl.getUniformLocation(prog, 't'), time*0.001);
+                gl.uniform2f(gl.getUniformLocation(prog, 'r'), canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+                requestAnimationFrame(render);
+            };
+            requestAnimationFrame(render);
+        }
+    </script>
 </body>
 </html>
