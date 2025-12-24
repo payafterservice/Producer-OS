@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Producer OS | AI Automation Studio</title>
-    <meta name="description" content="Architecting intelligent infrastructure for next-gen insurance and annuity leaders.">
+    <meta name="description" content="Architecting intelligent infrastructure for next-gen industry leaders.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,18 +57,32 @@
             overflow-x: hidden;
         }
 
+        .bg-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(67, 138, 254, 0.15) 0%, transparent 75%);
+        }
+
+        .mask-marquee {
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
         .ante-card {
             background-color: #080808;
             box-shadow: 0px .796192px .796192px -1px #0000000a, 
                         0px 2.41451px 2.41451px -2px #0000000a, 
                         0px 6.38265px 6.38265px -3px #00000008, 
+                        0px 20px 20px -4px #00000003, 
                         inset 0px 0px 1px 1px rgba(188, 198, 204, 0.1),
                         inset 0px 0px 15px 0px rgba(67, 138, 254, 0.1);
             border-radius: 2.5rem;
         }
 
         .ante-border {
-            box-shadow: inset 0px 0px 1px 1px rgba(188, 198, 204, 0.2);
+            box-shadow: 0px .796192px .796192px -1px #0000000a, 
+                        0px 2.41451px 2.41451px -2px #0000000a, 
+                        0px 6.38265px 6.38265px -3px #00000008, 
+                        0px 20px 20px -4px #00000003, 
+                        inset 0px 0px 1px 1px rgba(188, 198, 204, 0.2);
         }
 
         .text-silver-gradient {
@@ -88,38 +102,13 @@
             transform: translateY(0);
         }
 
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #333333; }
+        
         #water-canvas {
             filter: blur(10px);
-        }
-
-        .nav-link {
-            font-size: 9px;
-            font-family: 'JetBrains Mono', monospace;
-            color: #94A3B8;
-            text-transform: uppercase;
-            letter-spacing: 0.35em;
-            padding: 0.5rem 0.875rem;
-            border-radius: 9999px;
-            transition: all 0.3s;
-            font-weight: 700;
-        }
-
-        .nav-link:hover {
-            color: #BCC6CC;
-            background-color: rgba(255,255,255,0.05);
-        }
-
-        .mask-marquee {
-            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-        }
-
-        /* Page Transitions */
-        .page-content {
-            display: none;
-        }
-        .page-content.active {
-            display: block;
         }
     </style>
 </head>
@@ -139,20 +128,21 @@
     <!-- Navigation -->
     <nav class="fixed top-6 left-0 right-0 z-50 px-6">
         <div class="container mx-auto flex justify-between items-center max-w-6xl">
-            <a href="#home" onclick="showPage('home')" class="flex items-center hover:opacity-80 transition-opacity">
+            <a href="#" class="flex items-center hover:opacity-80 transition-opacity">
                 <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-8 md:h-10 w-auto" crossorigin="anonymous">
             </a>
 
             <div class="hidden md:flex bg-black/80 backdrop-blur-xl ante-border rounded-full p-1 items-center gap-0.5">
-                <a href="#home" onclick="showPage('home')" class="nav-link">Home</a>
-                <a href="#about" onclick="showPage('home', 'about')" class="nav-link">About</a>
-                <a href="#services" onclick="showPage('home', 'services')" class="nav-link">Services</a>
-                <a href="#team" onclick="showPage('home', 'team')" class="nav-link">Team</a>
-                <a href="#contact" onclick="showPage('home', 'contact')" class="nav-link">Contact</a>
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#team" class="nav-link">Team</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
 
             <div class="hidden md:flex">
-                 <a href="#contact" onclick="showPage('home', 'contact')" class="flex items-center gap-2 px-5 py-2.5 bg-brand text-white text-[9px] font-black font-mono uppercase tracking-[0.25em] rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(46,65,182,0.4)]">
+                 <a href="#contact" class="flex items-center gap-2 px-5 py-2.5 bg-brand text-white text-[9px] font-black font-mono uppercase tracking-[0.25em] rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(46,65,182,0.4)] active:scale-95 duration-500">
                     Start Project
                 </a>
             </div>
@@ -163,234 +153,448 @@
         </div>
     </nav>
 
-    <!-- Main Content Container -->
-    <div id="main-container">
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 flex flex-col items-center justify-center space-y-8 md:hidden transition-all duration-700 translate-y-[-100%] opacity-0">
+        <a href="#home" class="nav-link-mobile">Home</a>
+        <a href="#about" class="nav-link-mobile">About</a>
+        <a href="#services" class="nav-link-mobile">Services</a>
+        <a href="#team" class="nav-link-mobile">Team</a>
+        <a href="#faq" class="nav-link-mobile">FAQ</a>
+        <a href="#contact" class="nav-link-mobile">Contact</a>
+        <a href="#contact" class="px-12 py-4 bg-brand text-white font-mono font-black rounded-full uppercase tracking-widest text-[10px] mt-8 shadow-[0_0_20px_rgba(46,65,182,0.4)]">
+          Start Project
+        </a>
+    </div>
+
+    <!-- Hero -->
+    <section id="home" class="relative h-screen min-h-[600px] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
+        <canvas id="water-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-screen"></canvas>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none z-1"></div>
         
-        <!-- HOME PAGE -->
-        <div id="home-page" class="page-content active">
-            <!-- Hero -->
-            <section id="home" class="relative h-screen min-h-[600px] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
-                <canvas id="water-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-screen"></canvas>
-                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none z-1"></div>
+        <div class="relative z-10 max-w-6xl mx-auto space-y-8 flex flex-col items-center">
+            <div class="fade-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md ante-border mb-2">
+                <span class="w-1.5 h-1.5 bg-brand rounded-full animate-pulse-slow"></span>
+                <span class="text-[9px] font-mono uppercase tracking-[0.2em] text-silver font-bold">Built by Multi-Million Dollar Producers</span>
+            </div>
+            
+            <div class="fade-in flex flex-col items-center">
+                 <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-20 md:h-32 lg:h-40 w-auto drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]" crossorigin="anonymous">
+            </div>
+
+            <div class="space-y-8 max-w-2xl mx-auto flex flex-col items-center">
+                <p class="fade-in text-[15px] md:text-[18px] text-silver/80 leading-relaxed tracking-tight font-light drop-shadow-sm">
+                    Engineered by <span class="text-silver font-medium">Dennis M. Postema</span>. We architect the intelligent infrastructure for Insurance & Annuity producers to scale revenue without increasing overhead.
+                </p>
+
+                <div class="fade-in flex justify-center gap-4">
+                    <a href="#contact" class="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand text-white shadow-[0_0_20px_rgba(46,65,182,0.4)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
+                        <span class="font-mono text-[9px] uppercase tracking-[0.25em] font-black flex items-center gap-2">Deploy Your OS <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                    </a>
+                    <a href="#about" class="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 ante-border text-silver hover:bg-white/20 transition-all duration-300 hover:scale-[1.02]">
+                        <span class="font-mono text-[9px] uppercase tracking-[0.25em] font-bold">Learn More</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 w-full border-t border-white/[0.05] bg-black/60 backdrop-blur-md z-20">
+             <div class="w-full mx-auto overflow-hidden py-4 opacity-50 mask-marquee">
+                <div class="flex items-center gap-24 md:gap-32 animate-scroll w-max grayscale text-silver">
+                    <span class="marquee-text">ANNUITY FLOW</span>
+                    <span class="marquee-text">LIFE OS</span>
+                    <span class="marquee-text">LEAD GEN</span>
+                    <span class="marquee-text">D-MAC DIGITAL</span>
+                    <span class="marquee-text">AUTO POLICY</span>
+                    <span class="marquee-text">RECRUITER AI</span>
+                    <span class="marquee-text">CLAIM BOT</span>
+                    <span class="marquee-text">AGENT DASH</span>
+                    <span class="marquee-text">ANNUITY FLOW</span>
+                    <span class="marquee-text">LIFE OS</span>
+                    <span class="marquee-text">LEAD GEN</span>
+                    <span class="marquee-text">D-MAC DIGITAL</span>
+                    <span class="marquee-text">AUTO POLICY</span>
+                    <span class="marquee-text">RECRUITER AI</span>
+                    <span class="marquee-text">CLAIM BOT</span>
+                    <span class="marquee-text">AGENT DASH</span>
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <!-- Revenue Section -->
+    <section id="about" class="bg-black py-24 border-b border-white/[0.05]">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-16 max-w-3xl mx-auto">
+                <h2 class="fade-in text-4xl md:text-5xl font-serif italic text-silver mb-4 tracking-tighter leading-tight text-silver-gradient">Engineered for Commission Velocity</h2>
+                <p class="fade-in text-muted text-[15px] md:text-[16px] leading-relaxed font-light">
+                    We build the same bespoke automation stacks used by Dennis to generate millions in the Insurance and Annuity industry.
+                </p>
+            </div>
+
+            <div class="fade-in relative ante-card overflow-hidden mb-12 max-w-5xl mx-auto group">
+                <div class="flex flex-col md:flex-row min-h-[440px]">
+                    <div class="p-8 md:p-12 md:w-[55%] flex flex-col justify-center relative z-10 order-2 md:order-1">
+                        <div class="flex gap-1.5 mb-5 text-silver">
+                            <i data-lucide="badge-check" class="w-5 h-5 text-brand"></i>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-brand font-bold">Verified Origin Story</span>
+                        </div>
+                        <blockquote class="text-xl md:text-2xl text-silver font-serif italic leading-relaxed mb-8 tracking-tight">
+                            "The biggest bottleneck for producers is manual follow-up and policy tracking. 
+                            <br/><br/>
+                            I built <span class="text-brand font-sans not-italic font-bold">Producer OS</span> to solve my own problems."
+                        </blockquote>
+                        <div>
+                            <h4 class="text-silver font-bold text-[17px] tracking-tight text-silver-gradient">Dennis M. Postema</h4>
+                            <p class="text-dim text-[9px] font-mono mt-1.5 uppercase tracking-[0.3em] font-bold">Founder & Multi-Million Dollar Producer</p>
+                        </div>
+                    </div>
+                    <div class="md:w-[45%] relative min-h-[350px] bg-black order-1 md:order-2 overflow-hidden border-l border-white/[0.05]">
+                        <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" alt="Dennis" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-all duration-1000">
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 text-left">
+                <div>
+                    <h3 class="fade-in text-xl md:text-2xl font-serif italic text-silver mb-3 tracking-tight">Underwriting Flow</h3>
+                    <p class="fade-in text-muted text-[14px] leading-relaxed font-light">Automate the data gathering and initial vetting for policies, saving your agents 15+ hours per week per desk.</p>
+                </div>
+                <div>
+                    <h3 class="fade-in text-xl md:text-2xl font-serif italic text-silver mb-3 tracking-tight">Annuity Pipelines</h3>
+                    <p class="fade-in text-muted text-[14px] leading-relaxed font-light">Keep track of complex multi-touch cycles with intelligence that nurtures prospects based on triggers.</p>
+                </div>
+                <div>
+                    <h3 class="fade-in text-xl md:text-2xl font-serif italic text-silver mb-3 tracking-tight">Recruitment Scaling</h3>
+                    <p class="fade-in text-muted text-[14px] leading-relaxed font-light">Auto-vet and onboard new agents into your downline using the exact script-engine that Dennis perfected.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="py-24 bg-black">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="fade-in text-4xl md:text-6xl font-serif italic text-silver tracking-tighter text-center mb-16 text-silver-gradient">Total Agency Orchestration</h2>
+            
+            <div class="grid lg:grid-cols-12 gap-5">
+                <div class="lg:col-span-5 flex flex-col gap-5">
+                    <div class="fade-in p-8 ante-card group text-left">
+                        <div class="w-12 h-12 ante-border rounded-2xl flex items-center justify-center mb-5 text-silver bg-white/10 group-hover:bg-brand/20 transition-all">
+                            <i data-lucide="database" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xl font-serif italic text-silver mb-2">Lead Intelligence</h3>
+                        <p class="text-muted text-[13px] leading-relaxed font-light">Stop guessing. We score your inbound traffic using models trained on industry data.</p>
+                    </div>
+                    <div class="fade-in p-8 ante-card group text-left">
+                        <div class="w-12 h-12 ante-border rounded-2xl flex items-center justify-center mb-5 text-silver bg-white/10 group-hover:bg-brand/20 transition-all">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xl font-serif italic text-silver mb-2">Commission Logic</h3>
+                        <p class="text-muted text-[13px] leading-relaxed font-light">Real-time tracking of complex carrier payouts and agent overrides.</p>
+                    </div>
+                </div>
+                <div class="lg:col-span-7">
+                    <div class="fade-in h-full p-10 md:p-12 ante-card relative overflow-hidden flex flex-col group text-left">
+                        <h3 class="text-2xl md:text-3xl font-serif italic text-silver mb-4 leading-tight">Carrier Integration</h3>
+                        <p class="text-muted text-[15px] font-light leading-relaxed mb-8">We build bridges between your CRM and carrier portals, automating the repetitive data-entry that kills productivity.</p>
+                        
+                        <div class="flex-grow flex items-center justify-center relative min-h-[250px]">
+                            <div class="w-16 h-16 bg-black ante-border rounded-3xl flex items-center justify-center z-20 shadow-2xl group-hover:scale-110 transition-transform">
+                                <i data-lucide="brain-circuit" class="w-8 h-8 text-silver"></i>
+                            </div>
+                            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,rgba(67,138,254,0.4)_0%,transparent_70%)]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team" class="py-24 bg-black border-t border-white/[0.05]">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="fade-in text-4xl md:text-5xl font-serif italic text-silver text-center mb-16 text-silver-gradient tracking-tighter">The Industry Architects</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="fade-in group text-left">
+                    <div class="aspect-[3/4] bg-[#0a0a0a] overflow-hidden rounded-[2rem] relative mb-5 ante-card border border-white/5">
+                        <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" class="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-30 transition-all duration-1000">
+                        <div class="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 bg-gradient-to-t from-black via-black/40 to-transparent">
+                            <h3 class="text-xl font-serif italic text-silver mb-1">Dennis M. Postema</h3>
+                            <p class="text-[10px] font-mono text-muted uppercase tracking-widest font-bold">Founder / Architect</p>
+                        </div>
+                    </div>
+                    <div class="px-6 group-hover:opacity-0 transition-opacity">
+                        <h3 class="text-lg font-bold text-silver">Dennis M. Postema</h3>
+                        <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Founder / Architect</p>
+                    </div>
+                </div>
+                <div class="fade-in group text-left">
+                    <div class="aspect-[3/4] bg-[#0a0a0a] overflow-hidden rounded-[2rem] relative mb-5 ante-card border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop" class="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-30 transition-all duration-1000">
+                        <div class="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 bg-gradient-to-t from-black via-black/40 to-transparent">
+                            <h3 class="text-xl font-serif italic text-silver mb-1">Christian</h3>
+                            <p class="text-[10px] font-mono text-muted uppercase tracking-widest font-bold">Systems Engineer</p>
+                        </div>
+                    </div>
+                    <div class="px-6 group-hover:opacity-0 transition-opacity">
+                        <h3 class="text-lg font-bold text-silver">Christian</h3>
+                        <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Systems Engineer</p>
+                    </div>
+                </div>
+                <div class="fade-in group text-left">
+                    <div class="aspect-[3/4] bg-[#0a0a0a] overflow-hidden rounded-[2rem] relative mb-5 ante-card border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=800&fit=crop" class="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-30 transition-all duration-1000">
+                        <div class="absolute inset-0 p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 bg-gradient-to-t from-black via-black/40 to-transparent">
+                            <h3 class="text-xl font-serif italic text-silver mb-1">Ahmed</h3>
+                            <p class="text-[10px] font-mono text-muted uppercase tracking-widest font-bold">Product Director</p>
+                        </div>
+                    </div>
+                    <div class="px-6 group-hover:opacity-0 transition-opacity">
+                        <h3 class="text-lg font-bold text-silver">Ahmed</h3>
+                        <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Product Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 bg-black border-t border-white/[0.05]">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="fade-in text-5xl md:text-7xl font-serif italic text-silver mb-8 tracking-tighter text-silver-gradient">Ready to Deploy Your Agency OS?</h2>
+                    <div class="fade-in flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full ante-border flex items-center justify-center text-brand">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Direct Line</p>
+                            <p class="text-silver font-medium">hello@produceros.com</p>
+                        </div>
+                    </div>
+                </div>
                 
-                <div class="relative z-10 max-w-6xl mx-auto space-y-8 flex flex-col items-center">
-                    <div class="fade-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md ante-border mb-2">
-                        <span class="w-1.5 h-1.5 bg-brand rounded-full animate-pulse-slow"></span>
-                        <span class="text-[9px] font-mono uppercase tracking-[0.2em] text-silver font-bold">Built by Multi-Million Dollar Producers</span>
-                    </div>
-                    
-                    <div class="fade-in">
-                        <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-20 md:h-32 lg:h-40 w-auto drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]" crossorigin="anonymous">
-                    </div>
-
-                    <div class="space-y-8 max-w-2xl mx-auto flex flex-col items-center">
-                        <p class="fade-in text-[15px] md:text-[18px] text-silver/80 leading-relaxed tracking-tight font-light">
-                            Engineered by <span class="text-silver font-medium">Dennis M. Postema</span>. We architect the intelligent infrastructure for Insurance & Annuity producers to scale revenue.
-                        </p>
-                        <div class="fade-in flex justify-center gap-4">
-                            <a href="#contact" class="px-5 py-2.5 bg-brand text-white font-mono text-[9px] uppercase tracking-widest font-black rounded-full shadow-[0_0_20px_rgba(46,65,182,0.4)]">Deploy OS</a>
-                            <a href="#about" class="px-5 py-2.5 bg-white/10 ante-border text-silver font-mono text-[9px] uppercase tracking-widest rounded-full">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Marquee -->
-                <div class="absolute bottom-0 w-full border-t border-white/[0.05] bg-black/60 backdrop-blur-md z-20 overflow-hidden py-4 opacity-50 mask-marquee">
-                    <div class="flex items-center gap-24 md:gap-32 animate-scroll w-max grayscale text-silver text-[11px] font-mono uppercase tracking-[0.4em] font-bold">
-                        <span>ANNUITY FLOW</span><span>LIFE OS</span><span>LEAD GEN</span><span>D-MAC DIGITAL</span><span>CLAIM BOT</span>
-                        <span>ANNUITY FLOW</span><span>LIFE OS</span><span>LEAD GEN</span><span>D-MAC DIGITAL</span><span>CLAIM BOT</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- About -->
-            <section id="about" class="bg-black py-24 border-b border-white/[0.05]">
-                <div class="container mx-auto px-6 max-w-6xl">
-                    <div class="text-center mb-16 max-w-3xl mx-auto">
-                        <h2 class="fade-in text-4xl md:text-5xl font-serif italic text-silver-gradient">Engineered for Commission Velocity</h2>
-                    </div>
-                    <div class="fade-in relative ante-card overflow-hidden group mb-12">
-                        <div class="flex flex-col md:flex-row min-h-[440px]">
-                            <div class="p-8 md:p-12 md:w-[55%] flex flex-col justify-center order-2 md:order-1 text-left">
-                                <blockquote class="text-xl md:text-2xl text-silver font-serif italic mb-8">
-                                    "The biggest bottleneck for producers is manual follow-up. I built Producer OS to solve my own problems."
-                                </blockquote>
-                                <div>
-                                    <h4 class="text-silver font-bold">Dennis M. Postema</h4>
-                                    <p class="text-dim text-[9px] font-mono uppercase tracking-widest font-bold">Founder & Producer</p>
-                                </div>
+                <div class="fade-in ante-card p-10 md:p-14">
+                    <form id="contact-form" class="space-y-6 text-left">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Full Name</label>
+                                <input required type="text" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all">
                             </div>
-                            <div class="md:w-[45%] relative min-h-[350px] bg-black order-1 md:order-2">
-                                <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-all duration-1000">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Email</label>
+                                <input required type="email" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all">
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- PRIVACY POLICY PAGE -->
-        <div id="privacy-page" class="page-content pt-40 pb-20 px-6">
-            <div class="container mx-auto max-w-4xl text-left">
-                <h1 class="text-5xl font-serif italic text-silver mb-12 text-silver-gradient">Privacy Policy</h1>
-                <div class="space-y-8 text-muted font-light leading-relaxed">
-                    <p>Last updated: 2025-09-07</p>
-                    <p>Producer OS Digital ("we," "us," or "our") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect and use information.</p>
-                    <h3 class="text-silver font-bold text-xl font-serif italic">1. Who We Are</h3>
-                    <p>Producer OS Digital is a software automation agency offering AI and workflow solutions for the Insurance and Annuity industry. Contact: hello@produceros.com</p>
-                    <h3 class="text-silver font-bold text-xl font-serif italic">2. Data Collection</h3>
-                    <p>We collect data you provide via contact forms and anonymous analytics to improve our user experience.</p>
-                </div>
-                <button onclick="showPage('home')" class="mt-12 px-8 py-3 bg-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest hover:bg-white/20">Back to Home</button>
-            </div>
-        </div>
-
-        <!-- TERMS PAGE -->
-        <div id="terms-page" class="page-content pt-40 pb-20 px-6">
-            <div class="container mx-auto max-w-4xl text-left">
-                <h1 class="text-5xl font-serif italic text-silver mb-12 text-silver-gradient">Terms & Conditions</h1>
-                <div class="space-y-8 text-muted font-light leading-relaxed">
-                    <p>Last updated: 2025-09-07</p>
-                    <p>Welcome to Producer OS Digital. By accessing our website, you agree to the following terms.</p>
-                    <h3 class="text-silver font-bold text-xl font-serif italic">1. Intellectual Property</h3>
-                    <p>All content and software designs are the intellectual property of Producer OS Digital unless otherwise stated in a client agreement.</p>
-                </div>
-                <button onclick="showPage('home')" class="mt-12 px-8 py-3 bg-white/10 rounded-full text-[10px] font-mono uppercase tracking-widest hover:bg-white/20">Back to Home</button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Contact Form Section (Always Visible on Home) -->
-    <div id="contact-wrapper" class="bg-black">
-        <section id="contact" class="py-24 border-t border-white/[0.05]">
-            <div class="container mx-auto px-6 max-w-6xl">
-                <div class="grid lg:grid-cols-2 gap-16 items-center">
-                    <div class="text-left">
-                        <h2 class="text-5xl md:text-7xl font-serif italic text-silver-gradient mb-8">Ready to Deploy?</h2>
-                        <p class="text-muted text-lg mb-8">hello@produceros.com</p>
-                    </div>
-                    <div class="ante-card p-10">
-                        <form id="contact-form" class="space-y-6 text-left">
-                            <input placeholder="Full Name" required class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver outline-none focus:ring-1 focus:ring-brand/50">
-                            <input placeholder="Email" required type="email" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver outline-none focus:ring-1 focus:ring-brand/50">
-                            <textarea placeholder="Message" rows="4" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver outline-none focus:ring-1 focus:ring-brand/50 resize-none"></textarea>
-                            <button type="submit" class="w-full py-4 bg-brand text-white font-mono font-black uppercase tracking-widest rounded-full shadow-[0_0_30px_rgba(46,65,182,0.4)]">Send Application</button>
-                        </form>
-                        <div id="form-success" class="hidden text-center py-10">
-                            <i data-lucide="check-circle-2" class="w-12 h-12 text-brand mx-auto mb-4"></i>
-                            <h3 class="text-2xl font-serif italic text-silver">Transmitted</h3>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">Message</label>
+                            <textarea rows="4" class="w-full bg-black/50 ante-border rounded-xl px-5 py-3 text-silver focus:outline-none focus:ring-1 focus:ring-brand/50 transition-all resize-none"></textarea>
                         </div>
+                        <button type="submit" class="w-full py-4 bg-brand text-white font-mono font-black uppercase tracking-[0.3em] rounded-full shadow-[0_0_30px_rgba(46,65,182,0.4)] hover:scale-[1.02] active:scale-95 transition-all">
+                            Deploy Application
+                        </button>
+                    </form>
+                    <div id="form-success" class="hidden text-center py-10 space-y-4">
+                        <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center mx-auto">
+                            <i data-lucide="check-circle-2" class="w-8 h-8 text-brand"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif italic text-silver">Message Received</h3>
+                        <p class="text-muted font-light">Architects will reach out within 24 hours.</p>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-black border-t border-white/[0.05] pt-20 pb-10 px-6">
-        <div class="container mx-auto max-w-6xl text-left">
+    <footer class="bg-black border-t border-white/[0.05] pt-20 pb-10 px-6 text-left">
+        <div class="container mx-auto max-w-6xl">
             <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
-                <div class="space-y-4">
-                    <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" class="h-8 w-auto">
-                    <p class="text-muted text-sm max-w-xs">Scale your agency with the Producer OS operating system.</p>
+                <div class="space-y-6">
+                    <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-10 w-auto" crossorigin="anonymous">
+                    <p class="text-muted text-sm max-w-sm leading-relaxed font-light">
+                        Architecting intelligent infrastructure for the next generation of industry leaders. We build the operating systems that scale multi-million dollar agencies.
+                    </p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full ante-border flex items-center justify-center text-muted hover:text-silver hover:bg-white/5 transition-all"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full ante-border flex items-center justify-center text-muted hover:text-silver hover:bg-white/5 transition-all"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
                 </div>
             </div>
-            <div class="pt-8 border-t border-white/[0.05] flex justify-between items-center">
-                <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">© 2025 PRODUCER OS</p>
+            <div class="pt-8 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">© 2025 PRODUCER OS DIGITAL. ALL RIGHTS RESERVED.</p>
                 <div class="flex gap-6">
-                    <a href="#privacy" onclick="showPage('privacy')" class="text-[9px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold">Privacy</a>
-                    <a href="#terms" onclick="showPage('terms')" class="text-[9px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold">Terms</a>
+                    <a href="#" class="text-[9px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold">Privacy</a>
+                    <a href="#" class="text-[9px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold">Terms</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Init Icons
+        // Initialize Lucide icons
         lucide.createIcons();
 
-        // Simple SPA Router
-        function showPage(pageId, scrollToId) {
-            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId + '-page').classList.add('active');
-            
-            // Hide contact form wrapper if not on home
-            const contactWrapper = document.getElementById('contact-wrapper');
-            contactWrapper.style.display = (pageId === 'home') ? 'block' : 'none';
-
-            window.scrollTo(0, 0);
-            if (scrollToId) {
-                setTimeout(() => {
-                    document.getElementById(scrollToId)?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-            }
-        }
-
-        // Preloader with Safety Timeout
-        const finishPreload = () => {
-            const loader = document.getElementById('preloader');
-            loader.style.transform = 'translateY(-100%)';
-            setTimeout(() => loader.style.display = 'none', 1000);
-        };
-
+        // Preloader Logic
         window.addEventListener('load', () => {
-            document.getElementById('preloader-logo').style.opacity = '1';
-            document.getElementById('preloader-logo').style.transform = 'translateY(0)';
-            document.getElementById('preloader-bar').style.width = '160px';
-            document.getElementById('preloader-text').style.opacity = '1';
-            setTimeout(finishPreload, 2400);
-        });
-        setTimeout(finishPreload, 4000); // Safety timeout for black screen
+            const logo = document.getElementById('preloader-logo');
+            const bar = document.getElementById('preloader-bar');
+            const text = document.getElementById('preloader-text');
+            const loader = document.getElementById('preloader');
 
-        // Intersection Observer
+            logo.style.opacity = '1';
+            logo.style.transform = 'translateY(0)';
+            bar.style.width = '160px';
+            text.style.opacity = '1';
+
+            setTimeout(() => {
+                loader.style.transform = 'translateY(-100%)';
+            }, 2400);
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.style.transform = 'translateY(0)';
+                mobileMenu.style.opacity = '1';
+                menuToggle.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i>';
+            } else {
+                mobileMenu.style.transform = 'translateY(-100%)';
+                mobileMenu.style.opacity = '0';
+                menuToggle.innerHTML = '<i data-lucide="menu" class="w-5 h-5"></i>';
+            }
+            lucide.createIcons();
+        });
+
+        // Intersection Observer for Animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
         }, { threshold: 0.1 });
+
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        // Form logic
-        document.getElementById('contact-form').addEventListener('submit', (e) => {
+        // Contact Form Logic
+        const form = document.getElementById('contact-form');
+        const success = document.getElementById('form-success');
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
-            document.getElementById('contact-form').classList.add('hidden');
-            document.getElementById('form-success').classList.remove('hidden');
+            form.classList.add('hidden');
+            success.classList.remove('hidden');
         });
 
-        // WebGL Background
+        // WebGL Water Ripple Background
         const canvas = document.getElementById('water-canvas');
         const gl = canvas.getContext('webgl');
         if (gl) {
-            const vs = `attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }`;
-            const fs = `
+            const vertexSource = `
+                attribute vec2 position;
+                void main() { gl_Position = vec4(position, 0.0, 1.0); }
+            `;
+            const fragmentSource = `
                 precision highp float;
                 uniform float time;
                 uniform vec2 resolution;
                 void main() {
                     vec2 uv = gl_FragCoord.xy / resolution.xy;
+                    float ratio = resolution.x / resolution.y;
                     vec2 p = uv - 0.5;
-                    p.x *= resolution.x / resolution.y;
-                    float d = length(p);
-                    float z = sin(d * 20.0 - time * 2.0) * exp(-d * 1.5);
-                    vec3 col = mix(vec3(0.0), vec3(0.26, 0.54, 0.99), z * 0.5 + 0.5);
-                    gl_FragColor = vec4(col, 1.0);
+                    p.x *= ratio;
+                    float dist = length(p);
+                    float t = time * 1.6;
+                    float ripple1 = sin(dist * 18.0 - t);
+                    float ripple2 = sin(dist * 7.0 - t * 0.45 + 1.5);
+                    float ripple3 = sin(dist * 28.0 - t * 1.3 + 3.0);
+                    float z = (ripple1 * 0.5 + ripple2 * 0.3 + ripple3 * 0.2) * exp(-dist * 1.1);
+                    z = z * 0.5 + 0.5;
+                    vec3 deepBlue = vec3(0.0, 0.03, 0.08);
+                    vec3 azureLogo = vec3(0.26, 0.54, 0.99);
+                    vec3 lightSilver = vec3(0.74, 0.78, 0.82);
+                    vec3 color = mix(deepBlue, azureLogo, smoothstep(0.0, 1.0, z));
+                    color = mix(color, lightSilver, pow(z, 14.0) * 0.6);
+                    color += (exp(-dist * 4.0) * 0.4) * azureLogo;
+                    color *= smoothstep(1.8, 0.3, dist);
+                    gl_FragColor = vec4(color, 1.0);
                 }
             `;
-            const s = (t, c) => { const sh = gl.createShader(t); gl.shaderSource(sh, c); gl.compileShader(sh); return sh; };
-            const prog = gl.createProgram();
-            gl.attachShader(prog, s(gl.VERTEX_SHADER, vs));
-            gl.attachShader(prog, s(gl.FRAGMENT_SHADER, fs));
-            gl.linkProgram(prog); gl.useProgram(prog);
-            gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+            const createShader = (gl, type, src) => {
+                const s = gl.createShader(type);
+                gl.shaderSource(s, src);
+                gl.compileShader(s);
+                return s;
+            };
+            const program = gl.createProgram();
+            gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, vertexSource));
+            gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, fragmentSource));
+            gl.linkProgram(program);
+            gl.useProgram(program);
+            const buffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
             gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-            const pos = gl.getAttribLocation(prog, 'position');
-            gl.enableVertexAttribArray(pos); gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
-            const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; gl.viewport(0,0,canvas.width,canvas.height); };
-            window.onresize = resize; resize();
-            const draw = (t) => { gl.uniform1f(gl.getUniformLocation(prog, 'time'), t*0.001); gl.uniform2f(gl.getUniformLocation(prog, 'resolution'), canvas.width, canvas.height); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); requestAnimationFrame(draw); };
-            requestAnimationFrame(draw);
+            const pos = gl.getAttribLocation(program, 'position');
+            gl.enableVertexAttribArray(pos);
+            gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+            const tLoc = gl.getUniformLocation(program, 'time');
+            const rLoc = gl.getUniformLocation(program, 'resolution');
+            const resize = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            };
+            window.addEventListener('resize', resize);
+            resize();
+            const render = (time) => {
+                gl.uniform1f(tLoc, time * 0.001);
+                gl.uniform2f(rLoc, canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(render);
+            };
+            requestAnimationFrame(render);
         }
     </script>
+    <style>
+        .nav-link {
+            font-size: 9px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            padding: 0.5rem 0.875rem;
+            border-radius: 9999px;
+            transition: all 0.3s;
+            font-weight: 700;
+        }
+        .nav-link:hover {
+            color: #BCC6CC;
+            background-color: rgba(255,255,255,0.05);
+        }
+        .nav-link-mobile {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            font-weight: 700;
+        }
+        .marquee-text {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.4em;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            cursor: default;
+        }
+        .marquee-text:hover { color: #438AFE; }
+    </style>
 </body>
 </html>
