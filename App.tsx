@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
@@ -5,6 +6,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
 import NotFound from './pages/NotFound';
 import Layout from './components/Layout';
+import Preloader from './components/Preloader';
 import { useEffect } from 'react';
 
 const ScrollToTop = () => {
@@ -20,6 +22,7 @@ const ScrollToTop = () => {
 const App: React.FC = () => {
   return (
     <HashRouter>
+      <Preloader />
       <ScrollToTop />
       <Layout>
         <Routes>
