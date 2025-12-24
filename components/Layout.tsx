@@ -1,7 +1,6 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Twitter, Linkedin, Github } from 'lucide-react';
+import { Menu, X, Twitter, Linkedin } from 'lucide-react';
 import Branding from './Branding';
 
 const Footer: React.FC = () => {
@@ -19,7 +18,7 @@ const Footer: React.FC = () => {
           </div>
           
           <div className="flex gap-4">
-            {[Twitter, Linkedin, Github].map((Icon, i) => (
+            {[Twitter, Linkedin].map((Icon, i) => (
               <a key={i} href="#" className="w-10 h-10 rounded-full ante-border flex items-center justify-center text-muted hover:text-silver hover:bg-white/5 transition-all">
                 <Icon size={18} strokeWidth={1.5} />
               </a>
