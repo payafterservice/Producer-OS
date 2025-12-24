@@ -15,6 +15,7 @@ const Branding: React.FC<BrandingProps> = ({ className = "", size = 'md' }) => {
   };
 
   const logoHeight = sizes[size];
+  // Using the Google UserContent CDN format for maximum reliability
   const logoUrl = "https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC";
 
   return (
@@ -26,8 +27,10 @@ const Branding: React.FC<BrandingProps> = ({ className = "", size = 'md' }) => {
       <img 
         src={logoUrl} 
         alt="Producer OS Logo" 
-        className={`${logoHeight} w-auto object-contain drop-shadow-[0_0_15px_rgba(67,138,254,0.3)]`}
+        className={`${logoHeight} w-auto object-contain drop-shadow-[0_0_20px_rgba(67,138,254,0.35)]`}
         draggable={false}
+        loading="eager"
+        crossOrigin="anonymous"
       />
     </motion.div>
   );

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -12,7 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,8 +29,8 @@
                         background: '#000000',
                         muted: '#94A3B8',
                         dim: '#64748B',
-                        brand: '#438AFE', // Vibrant Logo Blue (Azure)
-                        silver: '#BCC6CC', // True Metallic Silver
+                        brand: '#438AFE',
+                        silver: '#BCC6CC',
                     },
                     animation: {
                         'spin-slow': 'spin 12s linear infinite',
@@ -89,26 +91,407 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #000000; }
         ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #333333; }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
-    "framer-motion": "https://esm.sh/framer-motion@^12.23.26"
-  }
-}
-</script>
 </head>
-<body>
-    <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
+<body class="selection:bg-brand/20 selection:text-white">
+
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black transition-transform duration-[900ms] ease-[0.76,0,0.24,1]">
+        <div class="relative overflow-hidden px-10">
+            <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-16 md:h-20 w-auto opacity-0 translate-y-20 transition-all duration-1000 delay-200" id="preloader-logo" crossorigin="anonymous">
+        </div>
+        <div class="h-[1px] bg-brand/40 mt-16 w-0 transition-all duration-[1500ms] ease-in-out delay-500" id="preloader-bar"></div>
+        <div class="absolute bottom-12 font-mono text-[8px] uppercase tracking-[0.4em] text-dim font-bold opacity-0 transition-opacity duration-700 delay-1000" id="preloader-text">
+            Initializing Agency OS
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-6 left-0 right-0 z-50 px-6">
+        <div class="container mx-auto flex justify-between items-center max-w-6xl">
+            <a href="#" class="flex items-center hover:opacity-80 transition-opacity">
+                <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-8 md:h-10 w-auto" crossorigin="anonymous">
+            </a>
+
+            <div class="hidden md:flex bg-black/80 backdrop-blur-xl ante-border rounded-full p-1 items-center gap-0.5">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#team" class="nav-link">Team</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+
+            <div class="hidden md:flex">
+                 <a href="#contact" class="flex items-center gap-2 px-5 py-2.5 bg-brand text-white text-[9px] font-black font-mono uppercase tracking-[0.25em] rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(46,65,182,0.4)] active:scale-95 duration-500">
+                    Start Project
+                </a>
+            </div>
+
+            <button class="md:hidden text-silver p-3 bg-black/90 backdrop-blur-xl rounded-full ante-border" id="menu-toggle">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 flex flex-col items-center justify-center space-y-8 md:hidden transition-all duration-700 translate-y-[-100%] opacity-0">
+        <a href="#home" class="nav-link-mobile">Home</a>
+        <a href="#about" class="nav-link-mobile">About</a>
+        <a href="#services" class="nav-link-mobile">Services</a>
+        <a href="#team" class="nav-link-mobile">Team</a>
+        <a href="#faq" class="nav-link-mobile">FAQ</a>
+        <a href="#contact" class="nav-link-mobile">Contact</a>
+        <a href="#contact" class="px-12 py-4 bg-brand text-white font-mono font-black rounded-full uppercase tracking-widest text-[10px] mt-8 shadow-[0_0_20px_rgba(46,65,182,0.4)]">
+          Start Project
+        </a>
+    </div>
+
+    <!-- Hero -->
+    <section id="home" class="relative h-screen min-h-[600px] flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-black">
+        <canvas id="water-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-screen blur-[10px]"></canvas>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 pointer-events-none z-1"></div>
+        
+        <div class="relative z-10 max-w-6xl mx-auto space-y-8 flex flex-col items-center">
+            <div class="fade-in inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md ante-border mb-2">
+                <span class="w-1.5 h-1.5 bg-brand rounded-full animate-pulse-slow"></span>
+                <span class="text-[9px] font-mono uppercase tracking-[0.2em] text-silver font-bold">Built by Multi-Million Dollar Producers</span>
+            </div>
+            
+            <div class="fade-in flex flex-col items-center">
+                 <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-20 md:h-32 lg:h-40 w-auto drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]" crossorigin="anonymous">
+            </div>
+
+            <div class="space-y-8 max-w-2xl mx-auto flex flex-col items-center">
+                <p class="fade-in text-[15px] md:text-[18px] text-silver/80 leading-relaxed tracking-tight font-light drop-shadow-sm">
+                    Engineered by <span class="text-silver font-medium">Dennis M. Postema</span>. We architect the intelligent infrastructure for Insurance & Annuity producers to scale revenue without increasing overhead.
+                </p>
+
+                <div class="fade-in flex justify-center gap-4">
+                    <a href="#contact" class="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand text-white shadow-[0_0_20px_rgba(46,65,182,0.4)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
+                        <span class="font-mono text-[9px] uppercase tracking-[0.25em] font-black flex items-center gap-2">Deploy Your OS <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                    </a>
+                    <a href="#about" class="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 ante-border text-silver hover:bg-white/20 transition-all duration-300 hover:scale-[1.02]">
+                        <span class="font-mono text-[9px] uppercase tracking-[0.25em] font-bold">Learn More</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 opacity-60">
+            <span class="text-[8px] font-mono uppercase tracking-[0.3em] font-bold text-silver">Explore</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-silver to-transparent"></div>
+        </div>
+
+        <div class="absolute bottom-0 w-full border-t border-white/[0.05] bg-black/60 backdrop-blur-md z-20">
+             <div class="w-full mx-auto overflow-hidden py-4 opacity-50 mask-marquee">
+                <div class="flex items-center gap-24 md:gap-32 animate-scroll w-max grayscale text-silver">
+                    <span class="marquee-text">ANNUITY FLOW</span>
+                    <span class="marquee-text">LIFE OS</span>
+                    <span class="marquee-text">LEAD GEN</span>
+                    <span class="marquee-text">D-MAC DIGITAL</span>
+                    <span class="marquee-text">AUTO POLICY</span>
+                    <span class="marquee-text">RECRUITER AI</span>
+                    <span class="marquee-text">CLAIM BOT</span>
+                    <span class="marquee-text">AGENT DASH</span>
+                    <!-- Duplicate for infinite scroll -->
+                    <span class="marquee-text">ANNUITY FLOW</span>
+                    <span class="marquee-text">LIFE OS</span>
+                    <span class="marquee-text">LEAD GEN</span>
+                    <span class="marquee-text">D-MAC DIGITAL</span>
+                    <span class="marquee-text">AUTO POLICY</span>
+                    <span class="marquee-text">RECRUITER AI</span>
+                    <span class="marquee-text">CLAIM BOT</span>
+                    <span class="marquee-text">AGENT DASH</span>
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-black py-24 border-b border-white/[0.05]">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-16 max-w-3xl mx-auto">
+                <h2 class="fade-in text-4xl md:text-5xl font-serif italic text-silver mb-4 tracking-tighter leading-tight text-silver-gradient">Engineered for Commission Velocity</h2>
+                <p class="fade-in text-muted text-[15px] md:text-[16px] leading-relaxed font-light">
+                    We build the same bespoke automation stacks used by Dennis to generate millions in the Insurance and Annuity industry.
+                </p>
+            </div>
+
+            <div class="fade-in relative ante-card overflow-hidden mb-12 max-w-5xl mx-auto group">
+                <div class="flex flex-col md:flex-row min-h-[440px]">
+                    <div class="p-8 md:p-12 md:w-[55%] flex flex-col justify-center relative z-10 order-2 md:order-1">
+                        <div class="flex gap-1.5 mb-5 text-silver">
+                            <i data-lucide="badge-check" class="w-5 h-5 text-brand"></i>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-brand font-bold">Verified Origin Story</span>
+                        </div>
+                        <blockquote class="text-xl md:text-2xl text-silver font-serif italic leading-relaxed mb-8 tracking-tight">
+                            "The biggest bottleneck for producers is manual follow-up and policy tracking. 
+                            <br/><br/>
+                            I built <span class="text-brand font-sans not-italic font-bold">Producer OS</span> to solve my own problems."
+                        </blockquote>
+                        <div>
+                            <h4 class="text-silver font-bold text-[17px] tracking-tight text-silver-gradient">Dennis M. Postema</h4>
+                            <p class="text-dim text-[9px] font-mono mt-1.5 uppercase tracking-[0.3em] font-bold">Founder & Multi-Million Dollar Producer</p>
+                        </div>
+                    </div>
+                    <div class="md:w-[45%] relative min-h-[350px] bg-black order-1 md:order-2 overflow-hidden border-l border-white/[0.05]">
+                        <img src="https://lh3.googleusercontent.com/d/1gFEinqZRnyBevAPnRHVUvqSx6Yv8IUHH" alt="Dennis M. Postema" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:scale-105 transition-all duration-1000">
+                        <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent hidden md:block"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12 text-left mb-12">
+                <div>
+                    <h3 class="fade-in text-xl md:text-2xl font-serif italic text-silver mb-3 tracking-tight">Underwriting Flow</h3>
+                    <p class="fade-in text-muted text-[14px] leading-relaxed font-light">Automate the data gathering and initial vetting for policies, saving your agents 15+ hours per week per desk.</p>
+                </div>
+                <div>
+                    <h3 class="fade-in text-xl md:text-2xl font-serif italic text-silver mb-3 tracking-tight">Annuity Pipelines</h3>
+                    <p class="fade-in text-muted text-[14px] leading-relaxed font-light">Keep track of complex multi-touch cycles with intelligence that nurtures prospects based on triggers.</p>
+                </div>
+                <div>
+                    <h3 class="fade-in text-xl md:text-2xl font-serif italic text-silver mb-3 tracking-tight">Recruitment Scaling</h3>
+                    <p class="fade-in text-muted text-[14px] leading-relaxed font-light">Auto-vet and onboard new agents into your downline using the exact script-engine that Dennis perfected.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-black">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="fade-in text-4xl md:text-6xl font-serif italic text-silver tracking-tighter text-center mb-16 text-silver-gradient">Total Agency Orchestration</h2>
+            
+            <div class="grid lg:grid-cols-12 gap-5">
+                <div class="lg:col-span-5 flex flex-col gap-5">
+                    <div class="fade-in p-8 ante-card group text-left">
+                        <div class="w-12 h-12 ante-border rounded-2xl flex items-center justify-center mb-5 text-silver bg-white/10 group-hover:bg-brand/20 transition-all">
+                            <i data-lucide="database" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xl font-serif italic text-silver mb-2">Lead Intelligence</h3>
+                        <p class="text-muted text-[13px] leading-relaxed font-light">Stop guessing. We score your inbound traffic using models trained on industry data.</p>
+                    </div>
+                    <div class="fade-in p-8 ante-card group text-left">
+                        <div class="w-12 h-12 ante-border rounded-2xl flex items-center justify-center mb-5 text-silver bg-white/10 group-hover:bg-brand/20 transition-all">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xl font-serif italic text-silver mb-2">Commission Logic</h3>
+                        <p class="text-muted text-[13px] leading-relaxed font-light">Real-time tracking of complex carrier payouts and agent overrides.</p>
+                    </div>
+                </div>
+                <div class="lg:col-span-7">
+                    <div class="fade-in h-full p-10 md:p-12 ante-card relative overflow-hidden flex flex-col group text-left">
+                        <h3 class="text-2xl md:text-3xl font-serif italic text-silver mb-4 leading-tight">Carrier Integration</h3>
+                        <p class="text-muted text-[15px] font-light leading-relaxed mb-8">We build bridges between your CRM and carrier portals, automating the repetitive data-entry that kills productivity.</p>
+                        
+                        <div class="flex-grow flex items-center justify-center relative min-h-[250px]">
+                            <div class="w-16 h-16 bg-black ante-border rounded-3xl flex items-center justify-center z-20 shadow-2xl group-hover:scale-110 transition-transform">
+                                <i data-lucide="brain-circuit" class="w-8 h-8 text-silver"></i>
+                            </div>
+                            <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,rgba(67,138,254,0.4)_0%,transparent_70%)]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/[0.05] pt-20 pb-10 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row justify-between gap-12 mb-16">
+                <div class="space-y-6 text-left">
+                    <img src="https://lh3.googleusercontent.com/d/1JcgnmtP2E3Nq2ZAU6G835ruF2VhcHmJC" alt="Producer OS" class="h-10 w-auto" crossorigin="anonymous">
+                    <p class="text-muted text-sm max-w-sm leading-relaxed font-light">
+                        Architecting intelligent infrastructure for the next generation of industry leaders. We build the operating systems that scale multi-million dollar agencies.
+                    </p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full ante-border flex items-center justify-center text-muted hover:text-silver hover:bg-white/5 transition-all"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full ante-border flex items-center justify-center text-muted hover:text-silver hover:bg-white/5 transition-all"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] font-mono text-dim uppercase tracking-widest font-bold">© 2025 PRODUCER OS DIGITAL. ALL RIGHTS RESERVED.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-[9px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold">Privacy</a>
+                    <a href="#" class="text-[9px] font-mono text-dim hover:text-silver uppercase tracking-widest font-bold">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            const logo = document.getElementById('preloader-logo');
+            const bar = document.getElementById('preloader-bar');
+            const text = document.getElementById('preloader-text');
+            const loader = document.getElementById('preloader');
+
+            logo.style.opacity = '1';
+            logo.style.transform = 'translateY(0)';
+            bar.style.width = '160px';
+            text.style.opacity = '1';
+
+            setTimeout(() => {
+                loader.style.transform = 'translateY(-100%)';
+            }, 2400);
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
+
+        menuToggle.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.style.transform = 'translateY(0)';
+                mobileMenu.style.opacity = '1';
+                menuToggle.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i>';
+            } else {
+                mobileMenu.style.transform = 'translateY(-100%)';
+                mobileMenu.style.opacity = '0';
+                menuToggle.innerHTML = '<i data-lucide="menu" class="w-5 h-5"></i>';
+            }
+            lucide.createIcons();
+        });
+
+        // Intersection Observer for Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // WebGL Water Ripple Background
+        const canvas = document.getElementById('water-canvas');
+        const gl = canvas.getContext('webgl');
+        if (gl) {
+            const vertexSource = `
+                attribute vec2 position;
+                void main() { gl_Position = vec4(position, 0.0, 1.0); }
+            `;
+            const fragmentSource = `
+                precision highp float;
+                uniform float time;
+                uniform vec2 resolution;
+                void main() {
+                    vec2 uv = gl_FragCoord.xy / resolution.xy;
+                    float ratio = resolution.x / resolution.y;
+                    vec2 p = uv - 0.5;
+                    p.x *= ratio;
+                    float dist = length(p);
+                    float t = time * 1.6;
+                    float ripple1 = sin(dist * 18.0 - t);
+                    float ripple2 = sin(dist * 7.0 - t * 0.45 + 1.5);
+                    float ripple3 = sin(dist * 28.0 - t * 1.3 + 3.0);
+                    float z = (ripple1 * 0.5 + ripple2 * 0.3 + ripple3 * 0.2) * exp(-dist * 1.1);
+                    z = z * 0.5 + 0.5;
+                    vec3 deepBlue = vec3(0.0, 0.03, 0.08);
+                    vec3 azureLogo = vec3(0.26, 0.54, 0.99);
+                    vec3 lightSilver = vec3(0.74, 0.78, 0.82);
+                    vec3 color = mix(deepBlue, azureLogo, smoothstep(0.0, 1.0, z));
+                    color = mix(color, lightSilver, pow(z, 14.0) * 0.6);
+                    color += (exp(-dist * 4.0) * 0.4) * azureLogo;
+                    color *= smoothstep(1.8, 0.3, dist);
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `;
+            const createShader = (gl, type, src) => {
+                const s = gl.createShader(type);
+                gl.shaderSource(s, src);
+                gl.compileShader(s);
+                return s;
+            };
+            const program = gl.createProgram();
+            gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, vertexSource));
+            gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, fragmentSource));
+            gl.linkProgram(program);
+            gl.useProgram(program);
+            const buffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+            const pos = gl.getAttribLocation(program, 'position');
+            gl.enableVertexAttribArray(pos);
+            gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+            const tLoc = gl.getUniformLocation(program, 'time');
+            const rLoc = gl.getUniformLocation(program, 'resolution');
+            const resize = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                gl.viewport(0, 0, canvas.width, canvas.height);
+            };
+            window.addEventListener('resize', resize);
+            resize();
+            const render = (time) => {
+                gl.uniform1f(tLoc, time * 0.001);
+                gl.uniform2f(rLoc, canvas.width, canvas.height);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(render);
+            };
+            requestAnimationFrame(render);
+        }
+    </script>
+    <style>
+        .nav-link {
+            font-size: 9px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            padding: 0.5rem 0.875rem;
+            border-radius: 9999px;
+            transition: all 0.3s;
+            font-weight: 700;
+        }
+        .nav-link:hover {
+            color: #BCC6CC;
+            background-color: rgba(255,255,255,0.05);
+        }
+        .nav-link-mobile {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            font-weight: 700;
+        }
+        .marquee-text {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.4em;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            cursor: default;
+        }
+        .marquee-text:hover { color: #438AFE; }
+    </style>
 </body>
 </html>
